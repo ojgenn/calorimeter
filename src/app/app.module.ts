@@ -16,6 +16,7 @@ import { StoreModule } from '@ngrx/store';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
+import { ProfileModule } from './profile/profile.module';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -48,6 +49,7 @@ const REDUX_DEVTOOLS = [
             },
         }),
         StoreModule.forRoot({}),
+        ProfileModule,
         ...environment.useNgRxDevTool ? REDUX_DEVTOOLS : [],
         AppRoutingModule,
     ],
