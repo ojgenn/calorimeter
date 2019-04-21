@@ -18,3 +18,5 @@ export function profileReducer(
         }
     }
 }
+
+export const selectIsLoggedIn = (state: State) => state.isLoggedIn;

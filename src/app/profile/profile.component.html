@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      {{'TABS.PROFILE' | translate}}
+      {{(isLoggedIn$ | async) ? ('TABS.PROFILE' | translate): 'TABS.SIGN_IN' | translate}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
