@@ -2,7 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-import { Languages } from '../app/shared/commons/languages.enum';
+import { Languages } from '../app/shared/commons/enums/languages.enum';
 
 export const environment = {
   production: false,
