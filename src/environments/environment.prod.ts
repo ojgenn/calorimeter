@@ -1,3 +1,6 @@
+import { Languages } from '../app/shared/commons/languages.enum';
+
 export const environment = {
-  production: true
+    production: true,
+    language: Languages.Ru,
 };
