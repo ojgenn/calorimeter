@@ -1,4 +1,4 @@
-import { Languages } from '../app/shared/commons/languages.enum';
+import { Languages } from '../app/shared/commons/enums/languages.enum';
 
 export const environment = {
     production: true,

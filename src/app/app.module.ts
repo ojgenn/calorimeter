@@ -49,7 +49,6 @@ const REDUX_DEVTOOLS = [
             },
         }),
         StoreModule.forRoot({}),
-        ProfileModule,
         ...environment.useNgRxDevTool ? REDUX_DEVTOOLS : [],
         AppRoutingModule,
     ],
