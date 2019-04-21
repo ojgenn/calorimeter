@@ -1,5 +1,7 @@
 {
   "name": "calorimeter",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
