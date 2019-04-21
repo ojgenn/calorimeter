@@ -7,6 +7,7 @@ import { Languages } from '../app/shared/commons/languages.enum';
 export const environment = {
   production: false,
   language: Languages.Ru,
+  useNgRxDevTool: true,
 };
 
 /*
