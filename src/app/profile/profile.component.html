@@ -6,4 +6,11 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content>
+  <div *ngIf="(isLoggedIn$ | async); else signIn">
+    <span>тут будет профиль</span>
+  </div>
+  <ng-template #signIn>
+    <app-sign-in></app-sign-in>
+  </ng-template>
+</ion-content>
