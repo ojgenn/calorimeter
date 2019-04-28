@@ -29,8 +29,11 @@ export class AuthService {
             .catch(error => this._store.dispatch(new AuthActions.SignInFailure()));
     }
 
-    signOut(): Observable<boolean> {
-        return of(true);
+    signOut(): void {
+        this._store.dispatch(new AuthActions.SignOut());
+        this.afAuth.auth.signOut()
+            .then(res => this._store.dispatch(new AuthActions.SignOutSuccess()))
+            .catch(error => this._store.dispatch(new AuthActions.SignOutFailure()));
     }
 
 }
