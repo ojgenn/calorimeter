@@ -15,8 +15,8 @@ import { AuthService } from './services/auth.service';
 export class ProfileComponent implements OnInit {
     isLoggedIn$: Observable<boolean> = this._store.select(isLoggedIn);
 
-    constructor(private _store: Store<any>,
-                private _authService: AuthService,
+    constructor(private _authService: AuthService,
+                private _store: Store<any>,
                 public afAuth: AngularFireAuth) { }
 
     ngOnInit() {
@@ -27,6 +27,6 @@ export class ProfileComponent implements OnInit {
     }
 
     logout() {
-        this.afAuth.auth.signOut();
+        this._authService.signOut();
     }
 }
