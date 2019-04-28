@@ -1,17 +1,32 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
+
 import { Observable } from 'rxjs';
-import { isLoggedIn } from '../reducer';
 import { Store } from '@ngrx/store';
 
+import { isLoggedIn } from '../reducer';
+import { AuthService } from './services/auth.service';
+
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss'],
+    selector: 'app-profile',
+    templateUrl: './profile.component.html',
+    styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
-  isLoggedIn$: Observable<boolean> = this._store.select(isLoggedIn);
-  constructor(private _store: Store<any>) { }
+    isLoggedIn$: Observable<boolean> = this._store.select(isLoggedIn);
 
-  ngOnInit() {}
+    constructor(private _store: Store<any>,
+                private _authService: AuthService,
+                public afAuth: AngularFireAuth) { }
 
+    ngOnInit() {
+    }
+
+    login() {
+        this._authService.signIn();
+    }
+
+    logout() {
+        this.afAuth.auth.signOut();
+    }
 }

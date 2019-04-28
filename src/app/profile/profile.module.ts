@@ -11,6 +11,7 @@ import { ProfileComponent } from './profile.component';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { profileReducer } from './reducer/reducers/profile.reducer';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
     declarations: [ProfileComponent, SignInComponent],
@@ -22,6 +23,8 @@ import { SignInComponent } from './sign-in/sign-in.component';
         StoreModule.forFeature('profile', profileReducer),
         RouterModule.forChild([{ path: '', component: ProfileComponent }]),
     ],
+    providers: [AuthService],
 })
 export class ProfileModule {
+    constructor(private _authService: AuthService) {}
 }

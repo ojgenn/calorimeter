@@ -1,4 +1,4 @@
-import { ProfileActions } from '../actions/profile.actions';
+import { ActionTypes, ProfileActions } from '../actions/profile.actions';
 
 export interface State {
     isLoggedIn: boolean;
@@ -13,6 +13,12 @@ export function profileReducer(
     action: ProfileActions,
 ): State {
     switch (action.type) {
+        case ActionTypes.SignIn:
+            return state;
+        case ActionTypes.SignInSuccess:
+            console.log(action.payload);
+            return state;
+        case ActionTypes.SignInFailure:
         default: {
             return state;
         }
