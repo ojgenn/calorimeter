@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 
 import { isLoggedIn } from '../reducer';
 import { AuthService } from './services/auth.service';
+import * as ProfileActions from './reducer/actions/profile.actions';
 
 @Component({
     selector: 'app-profile',
@@ -23,7 +24,7 @@ export class ProfileComponent implements OnInit {
     }
 
     login() {
-        this._authService.signIn();
+        this._store.dispatch(new ProfileActions.SignIn());
     }
 
     logout() {

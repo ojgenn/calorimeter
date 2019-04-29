@@ -8,6 +8,8 @@ import { auth } from 'firebase';
 import { AngularFireAuth } from '@angular/fire/auth';
 
 import * as AuthActions from '../reducer/actions/profile.actions';
+import { fromPromise } from 'rxjs/internal-compatibility';
+import UserCredential = firebase.auth.UserCredential;
 
 @Injectable({
     providedIn: 'root',
@@ -34,6 +36,10 @@ export class AuthService {
         this.afAuth.auth.signOut()
             .then(res => this._store.dispatch(new AuthActions.SignOutSuccess()))
             .catch(error => this._store.dispatch(new AuthActions.SignOutFailure()));
+    }
+
+    signIn2(): Observable<UserCredential> {
+        return fromPromise(this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider()));
     }
 
 }
