@@ -2,5 +2,13 @@
   "TABS": {
     "PROFILE": "Мои данные",
     "SIGN_IN": "Авторизация"
+  },
+  "PAGES": {
+    "SIGN_IN": {
+      "BUTTON_LABEL": "авторизация"
+    },
+    "PROFILE": {
+      "SIGN_OUT_BUTTON_LABEL": "выйти"
+    }
   }
 }

@@ -1,3 +1,7 @@
-<p>
-  sign-in works!
-</p>
+<div>
+    <ion-button (click)="signIn()" expand="block">
+        <ion-spinner name="lines-small" *ngIf="(authPending$ | async) === pendingStatuses.Pending; else googleIcon"></ion-spinner>
+        <span class="button-label">{{'PAGES.SIGN_IN.BUTTON_LABEL' | translate}}</span>
+    </ion-button>
+</div>
+<ng-template #googleIcon><ion-icon expand="block" name="logo-googleplus"></ion-icon></ng-template>

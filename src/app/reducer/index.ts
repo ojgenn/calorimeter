@@ -7,3 +7,8 @@ export const isLoggedIn = createSelector(
     getProfileState,
     (state: fromProfile.State) => state.isLoggedIn
 );
+
+export const authPending = createSelector(
+    getProfileState,
+    (state: fromProfile.State) => state.authPending
+)
