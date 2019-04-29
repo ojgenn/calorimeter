@@ -16,7 +16,7 @@ export class SignInComponent {
   authPending$: Observable<PendingStatuses> = this._store.select(authPending);
   pendingStatuses = PendingStatuses;
 
-  constructor(private _store: Store<any>, private _authService: AuthService) { this.authPending$.subscribe(res => console.log(res))}
+  constructor(private _store: Store<any>, private _authService: AuthService) {}
 
   signIn() {
     this._authService.signIn();

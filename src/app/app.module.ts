@@ -19,6 +19,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
+import { AuthGuard } from './profile/services/auth-guard.service';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -62,6 +63,7 @@ const IMPORTS = [
     providers: [
         StatusBar,
         SplashScreen,
+        AuthGuard,
         AngularFireDatabase,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     ],
