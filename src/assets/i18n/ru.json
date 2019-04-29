@@ -5,7 +5,8 @@
   },
   "PAGES": {
     "SIGN_IN": {
-      "BUTTON_LABEL": "авторизация"
+      "BUTTON_LABEL": "авторизация",
+      "PENDING_LABEL": "проверка авторизации"
     },
     "PROFILE": {
       "SIGN_OUT_BUTTON_LABEL": "выйти"

@@ -1,14 +1,6 @@
 import { Action } from '@ngrx/store';
 import { User } from 'firebase';
-
-export enum ActionTypes {
-    SignIn = '[Profile] Sign In',
-    SignInSuccess = '[Profile] Sign In Success',
-    SignInFailure = '[Profile] Sign In Failure',
-    SignOut = '[Profile] Sign Out',
-    SignOutSuccess = '[Profile] Sign Out Success',
-    SignOutFailure = '[Profile] Sign Out Failure',
-}
+import { ActionTypes } from './types';
 
 export class SignInSuccess implements Action {
     readonly type = ActionTypes.SignInSuccess;
@@ -36,10 +28,3 @@ export class SignOut implements Action {
     readonly type = ActionTypes.SignOut;
 }
 
-export type ProfileActions =
-    | SignIn
-    | SignInSuccess
-    | SignInFailure
-    | SignOut
-    | SignOutFailure
-    | SignOutSuccess;

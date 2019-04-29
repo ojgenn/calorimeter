@@ -1,8 +1,7 @@
 import { User } from 'firebase';
-
-import { ActionTypes, ProfileActions } from '../actions/profile.actions';
 import { PendingStatuses } from '../../../shared/enums/pending-statuses.enum';
 import { fuse } from '../../../shared/utils';
+import {ActionTypes, ProfileActions} from '../actions/types';
 
 export interface State {
     isLoggedIn: boolean;
