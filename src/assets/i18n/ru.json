@@ -1,3 +1,52 @@
 {
-  "TEST": "тест"
+  "TABS": {
+    "PROFILE": "Мои данные",
+    "SIGN_IN": "Авторизация"
+  },
+  "PAGES": {
+    "SIGN_IN": {
+      "BUTTON_LABEL": "авторизация",
+      "PENDING_LABEL": "проверка авторизации"
+    },
+    "PROFILE": {
+      "SIGN_OUT_BUTTON_LABEL": "выйти",
+      "FORM": {
+        "GENDERS": {
+          "LABEL": "Пол",
+          "MALE": "Мужской",
+          "FEMALE": "Женский"
+        },
+        "LOAD": {
+          "LABEL": "Нагрузка",
+          "BASE": "Базовый обмен веществ",
+          "THREE_DAYS": "3р. в неделю",
+          "FIVE_DAYS": "5р. в неделю",
+          "FIVE_DAYS_INTENSIVE": "Интенсивно 5р. в неделю",
+          "EVERY_DAY": "Каждый день",
+          "EVERY_DAY_INTENSIVE": "Каждый день интенсивно",
+          "EVERY_DAY_AND_WORK": "Ежедневно плюс физическая работа"
+        },
+        "AGE": {
+          "LABEL": "Возраст"
+        },
+        "WEIGHT": {
+          "LABEL": "Вес"
+        },
+        "HEIGHT": {
+          "LABEL": "Рост"
+        }
+      }
+    },
+    "MODALS": {
+      "BUTTONS": {
+        "OK_BUTTON": "Ок",
+        "CANCEL_BUTTON": "Отмена"
+      }
+    }
+  },
+  "BUTTONS": {
+    "OK_BUTTON": "Ок",
+    "CANCEL_BUTTON": "Отмена",
+    "SAVE": "Сохранить"
+  }
 }

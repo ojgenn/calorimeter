@@ -1,0 +1,13 @@
+<div>
+    <ion-col *ngIf="(authPending$ | async) === pendingStatuses.Pending; else googleIcon"
+         class="center">
+        <ion-spinner name="lines-small"></ion-spinner>
+        <span class="button-label">{{'PAGES.SIGN_IN.PENDING_LABEL' | translate}}</span>
+    </ion-col>
+</div>
+<ng-template #googleIcon>
+    <ion-button (click)="signIn()" expand="block">
+        <ion-icon expand="block" name="logo-googleplus"></ion-icon>
+        <span class="button-label">{{'PAGES.SIGN_IN.BUTTON_LABEL' | translate}}</span>
+    </ion-button>
+</ng-template>
