@@ -12,6 +12,7 @@ import { ProfileRoutingModule } from './profile-routing.module';
 import { profileReducer } from './reducer/reducers/profile.reducer';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { AuthService } from './services/auth.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [ProfileComponent, SignInComponent],
@@ -22,6 +23,7 @@ import { AuthService } from './services/auth.service';
         ProfileRoutingModule,
         StoreModule.forFeature('profile', profileReducer),
         RouterModule.forChild([{ path: '', component: ProfileComponent }]),
+        ReactiveFormsModule,
     ],
     providers: [AuthService],
 })

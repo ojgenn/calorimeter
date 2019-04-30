@@ -1,4 +1,4 @@
-import { SignIn, SignInFailure, SignInSuccess, SignOut, SignOutFailure, SignOutSuccess } from './profile.actions';
+import { SignIn, SignInFailure, SignInSuccess, SignOut, SignOutFailure, SignOutSuccess, SaveUserData } from './profile.actions';
 
 export enum ActionTypes {
     SignIn = '[Profile] Sign In',
@@ -7,6 +7,7 @@ export enum ActionTypes {
     SignOut = '[Profile] Sign Out',
     SignOutSuccess = '[Profile] Sign Out Success',
     SignOutFailure = '[Profile] Sign Out Failure',
+    SaveUserData = '[Profile] Save User Data',
 }
 
 
@@ -16,4 +17,5 @@ export type ProfileActions =
     | SignInFailure
     | SignOut
     | SignOutFailure
-    | SignOutSuccess;
+    | SignOutSuccess
+    | SaveUserData;
