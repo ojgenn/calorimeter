@@ -1,6 +1,6 @@
 <ion-tabs>
 
-  <ion-tab-bar slot="bottom">
+  <ion-tab-bar slot="bottom" color="dark">
     <ion-tab-button tab="profile">
       <ion-icon name="person" *ngIf="isLoggedIn$ | async; else unAuthorized"></ion-icon>
       <ng-template #unAuthorized>
