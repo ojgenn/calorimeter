@@ -38,6 +38,14 @@
         }
       }
     },
+    "RECIPES": {
+      "SEGMENTS": {
+        "PRODUCTS": "Продукты",
+        "SPORT": "Спорт, затраты энергии"
+      },
+      "SEARCH": "Поиск",
+      "ADD": "Добавить"
+    },
     "MODALS": {
       "BUTTONS": {
         "OK_BUTTON": "Ок",
