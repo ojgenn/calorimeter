@@ -1,17 +1,83 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      {{(isLoggedIn$ | async) ? ('TABS.PROFILE' | translate): 'TABS.SIGN_IN' | translate}}
+      {{isLoggedIn$$.latestValue ? ('TABS.PROFILE' | translate): 'TABS.SIGN_IN' | translate}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div *ngIf="(isLoggedIn$ | async); else signIn">
-    <span>тут будет профиль</span>
-    <ion-button (click)="signOut()">{{'PAGES.PROFILE.SIGN_OUT_BUTTON_LABEL' | translate}}</ion-button>
+<ion-content padding>
+  <div *ngIf="isLoggedIn$$.latestValue; else signIn">
+
+    <form [formGroup]="userDataFormGroup">
+
+      <ion-item>
+        <ion-label position="floating"
+                   color="{{ userDataFormGroup.controls.age.errors && userDataFormGroup.controls.age.dirty ? 'danger' : 'primary' }}">
+          {{'PAGES.PROFILE.FORM.AGE.LABEL' |translate}}
+        </ion-label>
+        <ion-input formControlName="age"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="{{ userDataFormGroup.controls.gender.errors && userDataFormGroup.controls.gender.dirty ? 'danger' : 'primary' }}">
+          {{'PAGES.PROFILE.FORM.GENDERS.LABEL' |translate}}
+        </ion-label>
+        <ion-select formControlName="gender"
+                    [okText]="'PAGES.MODALS.BUTTONS.OK_BUTTON' | translate"
+                    [cancelText]="'PAGES.MODALS.BUTTONS.CANCEL_BUTTON' | translate">
+          <ion-select-option *ngFor="let gender of formGender" [value]="gender.key">{{gender.name | translate}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating"
+                   color="{{ userDataFormGroup.controls.weight.errors && userDataFormGroup.controls.weight.dirty ? 'danger' : 'primary' }}">
+          {{'PAGES.PROFILE.FORM.WEIGHT.LABEL' |translate}}
+        </ion-label>
+        <ion-input formControlName="weight"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating"
+                   color="{{ userDataFormGroup.controls.height.errors && userDataFormGroup.controls.height.dirty ? 'danger' : 'primary' }}">
+          {{'PAGES.PROFILE.FORM.HEIGHT.LABEL' |translate}}
+        </ion-label>
+        <ion-input formControlName="height"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="{{ userDataFormGroup.controls.load.errors && userDataFormGroup.controls.load.dirty ? 'danger' : 'primary' }}">
+          {{'PAGES.PROFILE.FORM.LOAD.LABEL' |translate}}
+        </ion-label>
+        <ion-select formControlName="load"
+                    [okText]="'PAGES.MODALS.BUTTONS.OK_BUTTON' | translate"
+                    [cancelText]="'PAGES.MODALS.BUTTONS.CANCEL_BUTTON' | translate">
+          <ion-select-option *ngFor="let load of formLoad" [value]="load.key">{{load.name | translate}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-row>
+        <ion-col>
+          <ion-button [disabled]="userDataFormGroup.invalid" (click)="save()">
+            {{'BUTTONS.SAVE' | translate}}
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button
+                  color="danger"
+                  (click)="signOut()">
+            {{'PAGES.PROFILE.SIGN_OUT_BUTTON_LABEL' | translate}}
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+    </form>
+
   </div>
+
   <ng-template #signIn>
     <app-sign-in></app-sign-in>
   </ng-template>
+
 </ion-content>
