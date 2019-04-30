@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 
 import { Store } from '@ngrx/store';
-import { auth } from 'firebase';
+import { auth, User } from 'firebase';
 
-import * as AuthActions from '../reducer/actions/profile.actions';
+import * as ProfileActions from '../reducer/actions/index';
+
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -20,16 +22,21 @@ export class AuthService {
     }
 
     signOut(): void {
-        this._store.dispatch(new AuthActions.SignOut());
+        this._store.dispatch(new ProfileActions.SignOut());
         this.afAuth.auth.signOut()
-            .then(res => this._store.dispatch(new AuthActions.SignOutSuccess()))
-            .catch(error => this._store.dispatch(new AuthActions.SignOutFailure()));
+            .then(res => this._store.dispatch(new ProfileActions.SignOutSuccess()))
+            .catch(error => this._store.dispatch(new ProfileActions.SignOutFailure()));
     }
 
     signIn(): void {
-        this._store.dispatch(new AuthActions.SignIn());
+        this._store.dispatch(new ProfileActions.SignIn());
         this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider())
-            .then(res => this._store.dispatch(new AuthActions.SignInSuccess(res.user)))
-            .catch(error => this._store.dispatch(new AuthActions.SignInFailure()));
+            .then(res => this._store.dispatch(new ProfileActions.SignInSuccess(res.user)))
+            .catch(error => this._store.dispatch(new ProfileActions.SignInFailure()));
+    }
+
+    getUser(): Observable<User> {
+        this._store.dispatch(new ProfileActions.SignIn());
+        return this.afAuth.user;
     }
 }
