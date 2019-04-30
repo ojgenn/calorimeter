@@ -1,9 +1,30 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Tab Two
-    </ion-title>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="primary">
+      <ion-button color="medium" (click)="presentModal()">
+        {{'PAGES.RECIPES.ADD' | translate}}
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{'TABS.RECIPES' | translate}}</ion-title>
   </ion-toolbar>
+
+  <ion-segment (ionChange)="segmentChanged($event)" color="medium">
+    <ion-segment-button [value]="segments.Products" checked>
+      <ion-label>{{recipesSegments[segments.Products] | translate}}</ion-label>
+    </ion-segment-button>
+    <ion-segment-button [value]="segments.Sport">
+      <ion-label>{{recipesSegments[segments.Sport] | translate}}</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-searchbar debounce="500" [placeholder]="'PAGES.RECIPES.SEARCH' | translate"></ion-searchbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content padding>
+
+  <ion-virtual-scroll [items]="[0,1,2,3,45,5,6,7,8,9,9,8,5,1,4,5,6,2,4,5,8,7,5,1,2,0,1,2,3,45,5,6,7,8,9,9,8,5,1,4,5,6,2,4,5,8,7,5,1,0,1,2,3,45,5,6,7,8,9,9,8,5,1,4,5,6,2,4,5,8,7,5,1]">
+    <ion-item *virtualItem="let item">
+      {{ item }}
+    </ion-item>
+  </ion-virtual-scroll>
+</ion-content>
