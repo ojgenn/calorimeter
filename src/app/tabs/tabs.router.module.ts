@@ -18,12 +18,12 @@ const routes: Routes = [
                 ],
             },
             {
-                path: 'tab2',
+                path: 'recipes-page',
                 canActivate: [AuthGuard],
                 children: [
                     {
                         path: '',
-                        loadChildren: '../tab2/tab2.module#Tab2PageModule',
+                        loadChildren: '../recipes-page/recipes-page.module#RecipesPageModule',
                     },
                 ],
             },
