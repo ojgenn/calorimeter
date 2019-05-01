@@ -1,17 +1,18 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Storage } from '@ionic/storage';
 
+import { User } from 'firebase';
 import { Store } from '@ngrx/store';
+
+import * as ProfileActions from './reducer/actions';
 
 import { isLoggedIn } from '../reducer';
 import { AuthService } from './services/auth.service';
 import { ObservableHandler } from '../shared/models/observable-handler';
-import { User } from 'firebase';
-import { isNullOrUndefined } from '../shared/utils';
-import * as ProfileActions from './reducer/actions';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { isNullOrUndefined, safeDetectChanges } from '../shared/utils';
 import { gender, Gender } from './commons/gender.model';
 import { load, Load } from './commons/load.model';
-import { LocalStorageService } from '../shared/services/local-storage.service';
 
 export interface UserData {
     age: number;
@@ -47,6 +48,7 @@ export class ProfileComponent {
 
     constructor(private _authService: AuthService,
                 private _cdr: ChangeDetectorRef,
+                private _storage: Storage,
                 private _store: Store<any>) { }
 
     static initFormGroup(userData?: UserData): FormGroup {
@@ -105,7 +107,7 @@ export class ProfileComponent {
             load: this.userDataFormGroup.controls['load'].value,
         };
         this._prepareAndStoreUserData(userData);
-        LocalStorageService.setItem('userData', userData);
+        this._storage.set('userData', userData).catch();
     }
 
     private _prepareUser(user: User): void {
@@ -118,11 +120,14 @@ export class ProfileComponent {
 
     private _initUserData(isUserLogged: boolean): void {
         if (isUserLogged) {
-            const userData: UserData = LocalStorageService.getItem('userData');
-            if (!!userData) {
-                this._prepareAndStoreUserData(userData);
-                this.userDataFormGroup = ProfileComponent.initFormGroup(userData);
-            }
+            this._storage.get('userData')
+                .then(userData => {
+                    if (!!userData) {
+                        this._prepareAndStoreUserData(userData);
+                        this.userDataFormGroup = ProfileComponent.initFormGroup(userData);
+                        safeDetectChanges(this._cdr);
+                    }
+                });
         }
     }
 
