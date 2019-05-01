@@ -10,14 +10,9 @@ import { RecipesSegments } from './commons/enums/recipes-segments.enum';
 import { ObservableHandler } from '../shared/models/observable-handler';
 import { user } from '../reducer';
 import { AutoUnsubscribe } from '../shared/decorators';
-import { Subscription } from 'rxjs';
-import { safeDetectChanges } from '../shared/utils';
-
-export interface SingleRecipeItem {
-    type: RecipesSegments;
-    name: string;
-    calories: number;
-}
+import { map } from 'rxjs/operators';
+import { SingleRecipeItem } from './commons/interfaces/single-recipe-item.interface';
+import { RecipeModalMode } from './commons/enums/recipe-modal-mode.enum';
 
 @AutoUnsubscribe
 @Component({
@@ -39,14 +34,15 @@ export class RecipesPageComponent implements OnInit, OnDestroy {
     items: Array<SingleRecipeItem> = [];
     showSpinner = false;
 
+    private _items$$;
+
     private _user$$ = new ObservableHandler(
         this._store.select(user),
         this._initCollection.bind(this),
         this._cdr,
     );
 
-    private _items: AngularFirestoreCollection<any>;
-    private _itemsSubscription$: Subscription;
+    private _itemsCollection: AngularFirestoreCollection<any>;
 
     constructor(public _modalController: ModalController,
                 private _store: Store<any>,
@@ -54,7 +50,6 @@ export class RecipesPageComponent implements OnInit, OnDestroy {
                 private _afs: AngularFirestore) {}
 
     ngOnInit(): void {
-        this._itemsSubscription$ = this._subscribeItems();
     }
 
     segmentChanged(ev: any): void {
@@ -62,41 +57,61 @@ export class RecipesPageComponent implements OnInit, OnDestroy {
         this._initCollection(this._user$$.latestValue);
     }
 
-    async presentModal(): Promise<void> {
+    editItem(item: SingleRecipeItem): void {
+        this.presentModal(RecipeModalMode.Edit, item).catch();
+    }
+
+    deleteItem(id: SingleRecipeItem['id']): void {
+        this._itemsCollection.doc(id).delete().catch();
+    }
+
+    showItem(item: SingleRecipeItem): void {
+        this.presentModal(RecipeModalMode.Show, item).catch();
+    }
+
+    async presentModal(recipeModalMode: RecipeModalMode = RecipeModalMode.Create, recipe?: SingleRecipeItem): Promise<void> {
         const modal: HTMLIonModalElement = await this._modalController.create({
             component: RecipesModalComponent,
             componentProps: {
-                activeSegment: this.activeSegment,
-                uid: this._user$$.latestValue.uid,
+                data: {
+                    activeSegment: this.activeSegment,
+                    uid: this._user$$.latestValue.uid,
+                    recipeModalMode,
+                    recipe,
+                }
             },
         });
+        modal.onDidDismiss()
+            .then((result) => {
+                if (result.data.id) {
+                    this._itemsCollection.doc(result.data.id).update(result.data.collection).catch();
+                }
+            });
+
         return await modal.present();
     }
 
     private _initCollection(userFromStore: User): void {
         if (!!userFromStore) {
             this.showSpinner = true;
-            this._items = this._afs.collection(userFromStore.uid).doc('my_products').collection(this.activeSegment);
-            this._unsubscribeItemsSubscription();
-            this._itemsSubscription$ = this._subscribeItems();
+            this._itemsCollection = this._afs.collection(userFromStore.uid).doc('my_products').collection(this.activeSegment);
+            this._items$$ = new ObservableHandler(this._itemsCollection.snapshotChanges()
+                .pipe(
+                    map(item => item.map(recipe => {
+                            const data = recipe.payload.doc.data();
+                            const id = recipe.payload.doc.id;
+                            return { id, ...data };
+                        },
+                        ),
+                    )),
+                    this._prepareItems.bind(this),
+                this._cdr);
         }
     }
 
-    private _subscribeItems(): Subscription {
-        return this._items
-            .valueChanges()
-            .subscribe(res => {
-                console.log(res);
-                this.items = res;
-                this.showSpinner = false;
-                safeDetectChanges(this._cdr);
-            });
-    }
-
-    private _unsubscribeItemsSubscription(): void {
-        if (this._itemsSubscription$) {
-            this._itemsSubscription$.unsubscribe();
-        }
+    private _prepareItems(item) {
+        this.items = item;
+        this.showSpinner = false;
     }
 
     ngOnDestroy(): void {}

@@ -5,7 +5,11 @@
                 <ion-icon name="close-circle"></ion-icon>
             </ion-button>
         </ion-buttons>
-        <ion-title>{{'PAGES.RECIPES.ADD' | translate}}</ion-title>
+        <ion-title [ngSwitch]="recipeModalMode">
+            <span *ngSwitchCase="recipeModals.Create">{{'PAGES.RECIPES.ADD' | translate}}</span>
+            <span *ngSwitchCase="recipeModals.Edit">{{'PAGES.RECIPES.EDITION' | translate}}</span>
+            <span *ngSwitchCase="recipeModals.Show">{{'PAGES.RECIPES.DETAILS' | translate}}</span>
+        </ion-title>
     </ion-toolbar>
 </ion-header>
 
@@ -34,7 +38,7 @@
         </ion-item>
 
         <ion-row>
-            <ion-col>
+            <ion-col *ngIf="recipeModalMode !== recipeModals.Show">
                 <ion-button [disabled]="recipeModalForm.invalid" (click)="save()">
                     {{'BUTTONS.SAVE' | translate}}
                 </ion-button>
