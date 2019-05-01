@@ -5,10 +5,15 @@ export const getProfileState = createFeatureSelector<fromProfile.State>('profile
 
 export const isLoggedIn = createSelector(
     getProfileState,
-    (state: fromProfile.State) => state.isLoggedIn
+    (state: fromProfile.State) => state.isLoggedIn,
 );
 
 export const authPending = createSelector(
     getProfileState,
-    (state: fromProfile.State) => state.authPending
-)
+    (state: fromProfile.State) => state.authPending,
+);
+
+export const user = createSelector(
+    getProfileState,
+    (state: fromProfile.State) => state.user,
+);

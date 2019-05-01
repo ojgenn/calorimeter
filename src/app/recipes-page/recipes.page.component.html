@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="primary">
+      <ion-button color="medium" (click)="presentModal()">
+        {{'PAGES.RECIPES.ADD' | translate}}
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{'TABS.RECIPES' | translate}}</ion-title>
+  </ion-toolbar>
+
+  <ion-segment (ionChange)="segmentChanged($event)" color="medium">
+    <ion-segment-button [value]="segments.Products" checked>
+      <ion-label>{{recipesSegments[segments.Products] | translate}}</ion-label>
+    </ion-segment-button>
+    <ion-segment-button [value]="segments.Sport">
+      <ion-label>{{recipesSegments[segments.Sport] | translate}}</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-searchbar [formControl]="searchBarForm" debounce="500" [placeholder]="'PAGES.RECIPES.SEARCH' | translate"></ion-searchbar>
+</ion-header>
+
+<ion-content padding>
+
+  <div *ngIf="showSpinner; else mainContent" class="spinner-container">
+    <ion-spinner name="lines"></ion-spinner>
+  </div>
+  <ng-template #mainContent>
+    <ion-virtual-scroll [items]="filteredItems">
+        <div *virtualItem="let item">
+            <app-recipe [item]="item"
+                        (edit)="editItem($event)"
+                        (delete)="deleteItem($event)"
+                        (show)="showItem($event)"></app-recipe>
+        </div>
+    </ion-virtual-scroll>
+  </ng-template>
+</ion-content>

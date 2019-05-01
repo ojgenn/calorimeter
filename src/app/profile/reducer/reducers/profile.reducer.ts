@@ -61,3 +61,4 @@ export function profileReducer(
 
 export const selectIsLoggedIn = (state: State) => state.isLoggedIn;
 export const authPending = (state: State) => state.authPending;
+export const user = (state: State) => state.user;

@@ -1,0 +1,20 @@
+<ion-item-sliding #slidingItem>
+    <ion-item (click)="showItem()">
+        <ion-label>
+            {{item.name}},
+            <span color="medium">
+                {{item.calories}} {{(item.type === recipesSegments.Products ? 'PAGES.RECIPES.RECIPES_MODAL.CALORIES_PER_100_G' : 'PAGES.RECIPES.RECIPES_MODAL.CALORIES_PER_HOUR') |translate}}
+            </span>
+        </ion-label>
+    </ion-item>
+    <ion-item-options>
+        <ion-item-option color="primary" (click)="editItem()">
+            <ion-icon slot="start" name="create"></ion-icon>
+            {{'PAGES.RECIPES.EDIT' | translate}}
+        </ion-item-option>
+        <ion-item-option color="danger" (click)="deleteItem()">
+            <ion-icon slot="start" name="trash"></ion-icon>
+            {{'PAGES.RECIPES.DELETE' | translate}}
+        </ion-item-option>
+    </ion-item-options>
+</ion-item-sliding>

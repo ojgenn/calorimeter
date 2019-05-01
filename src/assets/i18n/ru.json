@@ -1,7 +1,8 @@
 {
   "TABS": {
     "PROFILE": "Мои данные",
-    "SIGN_IN": "Авторизация"
+    "SIGN_IN": "Авторизация",
+    "RECIPES": "Мои рецепты"
   },
   "PAGES": {
     "SIGN_IN": {
@@ -36,6 +37,24 @@
           "LABEL": "Рост"
         }
       }
+    },
+    "RECIPES": {
+      "SEGMENTS": {
+        "PRODUCTS": "Продукты",
+        "SPORT": "Спорт, затраты энергии"
+      },
+      "RECIPES_MODAL": {
+        "NAME": "Название",
+        "CALORIES": "Калорийность",
+        "CALORIES_PER_HOUR": "ккал/ч",
+        "CALORIES_PER_100_G": "ккал/100гр."
+      },
+      "SEARCH": "Поиск",
+      "ADD": "Добавить",
+      "DETAILS": "Детализация",
+      "EDITION": "Редактирование",
+      "EDIT": "Edit",
+      "DELETE": "Del."
     },
     "MODALS": {
       "BUTTONS": {

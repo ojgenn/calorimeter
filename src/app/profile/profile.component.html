@@ -1,26 +1,26 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="dark">
     <ion-title>
       {{isLoggedIn$$.latestValue ? ('TABS.PROFILE' | translate): 'TABS.SIGN_IN' | translate}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding  color="medium">
   <div *ngIf="isLoggedIn$$.latestValue; else signIn">
 
     <form [formGroup]="userDataFormGroup">
 
       <ion-item>
         <ion-label position="floating"
-                   color="{{ userDataFormGroup.controls.age.errors && userDataFormGroup.controls.age.dirty ? 'danger' : 'primary' }}">
+                   color="{{ userDataFormGroup.controls.age.errors && userDataFormGroup.controls.age.dirty ? 'danger' : 'medium' }}">
           {{'PAGES.PROFILE.FORM.AGE.LABEL' |translate}}
         </ion-label>
         <ion-input formControlName="age"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label color="{{ userDataFormGroup.controls.gender.errors && userDataFormGroup.controls.gender.dirty ? 'danger' : 'primary' }}">
+        <ion-label color="{{ userDataFormGroup.controls.gender.errors && userDataFormGroup.controls.gender.dirty ? 'danger' : 'medium' }}">
           {{'PAGES.PROFILE.FORM.GENDERS.LABEL' |translate}}
         </ion-label>
         <ion-select formControlName="gender"
@@ -32,7 +32,7 @@
 
       <ion-item>
         <ion-label position="floating"
-                   color="{{ userDataFormGroup.controls.weight.errors && userDataFormGroup.controls.weight.dirty ? 'danger' : 'primary' }}">
+                   color="{{ userDataFormGroup.controls.weight.errors && userDataFormGroup.controls.weight.dirty ? 'danger' : 'medium' }}">
           {{'PAGES.PROFILE.FORM.WEIGHT.LABEL' |translate}}
         </ion-label>
         <ion-input formControlName="weight"></ion-input>
@@ -40,14 +40,14 @@
 
       <ion-item>
         <ion-label position="floating"
-                   color="{{ userDataFormGroup.controls.height.errors && userDataFormGroup.controls.height.dirty ? 'danger' : 'primary' }}">
+                   color="{{ userDataFormGroup.controls.height.errors && userDataFormGroup.controls.height.dirty ? 'danger' : 'medium' }}">
           {{'PAGES.PROFILE.FORM.HEIGHT.LABEL' |translate}}
         </ion-label>
         <ion-input formControlName="height"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label color="{{ userDataFormGroup.controls.load.errors && userDataFormGroup.controls.load.dirty ? 'danger' : 'primary' }}">
+        <ion-label color="{{ userDataFormGroup.controls.load.errors && userDataFormGroup.controls.load.dirty ? 'danger' : 'medium' }}">
           {{'PAGES.PROFILE.FORM.LOAD.LABEL' |translate}}
         </ion-label>
         <ion-select formControlName="load"
