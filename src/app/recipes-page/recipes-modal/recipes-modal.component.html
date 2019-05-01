@@ -11,7 +11,41 @@
 
 <ion-content padding color="medium">
     <ion-item color="medium">
-    {{(activeSegment == recipesSegments.Products ? 'PAGES.RECIPES.SEGMENTS.PRODUCTS' : 'PAGES.RECIPES.SEGMENTS.SPORT') | translate}}
+    {{(recipeSegment === recipesSegments.Products ? 'PAGES.RECIPES.SEGMENTS.PRODUCTS' : 'PAGES.RECIPES.SEGMENTS.SPORT') | translate}}
     </ion-item>
-    content
+
+    <form [formGroup]="recipeModalForm">
+
+        <ion-item>
+            <ion-label position="floating"
+                       color="{{ recipeModalForm.controls.name.errors && recipeModalForm.controls.name.dirty ? 'danger' : 'medium' }}">
+                {{'PAGES.RECIPES.RECIPES_MODAL.NAME' |translate}}
+            </ion-label>
+            <ion-input formControlName="name"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="floating"
+                       color="{{ recipeModalForm.controls.calories.errors && recipeModalForm.controls.calories.dirty ? 'danger' : 'medium' }}">
+                {{'PAGES.RECIPES.RECIPES_MODAL.CALORIES' |translate}},
+                {{(recipeSegment === recipesSegments.Products ? 'PAGES.RECIPES.RECIPES_MODAL.CALORIES_PER_100_G' : 'PAGES.RECIPES.RECIPES_MODAL.CALORIES_PER_HOUR') |translate}}
+            </ion-label>
+            <ion-input formControlName="calories"></ion-input>
+        </ion-item>
+
+        <ion-row>
+            <ion-col>
+                <ion-button [disabled]="recipeModalForm.invalid" (click)="save()">
+                    {{'BUTTONS.SAVE' | translate}}
+                </ion-button>
+            </ion-col>
+            <ion-col>
+                <ion-button
+                        color="danger"
+                        (click)="close()">
+                    {{'PAGES.PROFILE.SIGN_OUT_BUTTON_LABEL' | translate}}
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </form>
 </ion-content>

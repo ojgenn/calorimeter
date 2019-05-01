@@ -44,7 +44,6 @@ export class RecipesPageComponent {
     }
 
     async presentModal() {
-        console.log(this._user.latestValue);
         const modal: HTMLIonModalElement = await this._modalController.create({
             component: RecipesModalComponent,
             componentProps: {
@@ -56,7 +55,6 @@ export class RecipesPageComponent {
     }
 
     private _initCollection(userFromStore: User): void {
-        console.log(userFromStore);
         if (!!userFromStore) {
             this._items = this._afs.collection('test');
         }

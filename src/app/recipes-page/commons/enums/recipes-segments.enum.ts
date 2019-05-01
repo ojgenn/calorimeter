@@ -1,4 +1,4 @@
 export enum RecipesSegments {
-    Products,
-    Sport,
+    Products = 'products',
+    Sport = 'sport',
 }
