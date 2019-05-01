@@ -50,7 +50,9 @@
         "CALORIES_PER_100_G": "ккал/100гр."
       },
       "SEARCH": "Поиск",
-      "ADD": "Добавить"
+      "ADD": "Добавить",
+      "EDIT": "Edit",
+      "DELETE": "Del."
     },
     "MODALS": {
       "BUTTONS": {

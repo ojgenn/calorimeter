@@ -27,9 +27,9 @@
   </div>
   <ng-template #mainContent>
     <ion-virtual-scroll [items]="items">
-      <ion-item *virtualItem="let item">
-        {{ item }}
-      </ion-item>
+        <div *virtualItem="let item">
+            <app-recipe [item]="item"></app-recipe>
+        </div>
     </ion-virtual-scroll>
   </ng-template>
 </ion-content>

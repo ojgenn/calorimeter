@@ -1,3 +1,4 @@
+// вообще можно юзать кастомный https://ionicframework.com/docs/building/storage
 import { Injectable } from '@angular/core';
 
 import { safe } from '../utils';

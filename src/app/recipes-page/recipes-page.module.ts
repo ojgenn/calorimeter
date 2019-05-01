@@ -6,6 +6,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RecipesPageComponent } from './recipes.page.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { RecipesModalComponent } from './recipes-modal/recipes-modal.component';
+import { RecipeComponent } from './recipe/recipe.component';
+
+const COMPONENTS = [RecipesPageComponent, RecipesModalComponent, RecipeComponent];
 
 @NgModule({
     imports: [
@@ -16,7 +19,7 @@ import { RecipesModalComponent } from './recipes-modal/recipes-modal.component';
         RouterModule.forChild([{ path: '', component: RecipesPageComponent }]),
         TranslateModule,
     ],
-    declarations: [RecipesPageComponent, RecipesModalComponent],
+    declarations: [COMPONENTS],
     entryComponents: [RecipesModalComponent],
 })
 export class RecipesPageModule {
