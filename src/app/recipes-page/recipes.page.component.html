@@ -17,16 +17,25 @@
     </ion-segment-button>
   </ion-segment>
 
-  <ion-searchbar debounce="500" [placeholder]="'PAGES.RECIPES.SEARCH' | translate"></ion-searchbar>
+  <ion-searchbar [formControl]="searchBarForm" debounce="500" [placeholder]="'PAGES.RECIPES.SEARCH' | translate"></ion-searchbar>
 </ion-header>
 
 <ion-content padding>
+
+    <ion-refresher (ionRefresh)="doRefresh()" #refresherRef>
+        <ion-refresher-content
+                pullingIcon="arrow-dropdown"
+                [pullingText]="'REFRESHER.PULL_DOWN' | translate"
+                refreshingSpinner="circles"
+                [refreshingText]="'REFRESHER.REFRESHING' | translate">
+        </ion-refresher-content>
+    </ion-refresher>
 
   <div *ngIf="showSpinner; else mainContent" class="spinner-container">
     <ion-spinner name="lines"></ion-spinner>
   </div>
   <ng-template #mainContent>
-    <ion-virtual-scroll [items]="items">
+    <ion-virtual-scroll [items]="filteredItems">
         <div *virtualItem="let item">
             <app-recipe [item]="item"
                         (edit)="editItem($event)"

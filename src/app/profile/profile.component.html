@@ -1,5 +1,10 @@
 <ion-header>
   <ion-toolbar color="dark">
+    <ion-buttons slot="primary" *ngIf="isLoggedIn$$.latestValue">
+      <ion-button color="medium" (click)="signOut()">
+        <ion-icon name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>
       {{isLoggedIn$$.latestValue ? ('TABS.PROFILE' | translate): 'TABS.SIGN_IN' | translate}}
     </ion-title>
@@ -60,14 +65,7 @@
       <ion-row>
         <ion-col>
           <ion-button [disabled]="userDataFormGroup.invalid" (click)="save()">
-            {{'BUTTONS.SAVE' | translate}}
-          </ion-button>
-        </ion-col>
-        <ion-col>
-          <ion-button
-                  color="danger"
-                  (click)="signOut()">
-            {{'PAGES.PROFILE.SIGN_OUT_BUTTON_LABEL' | translate}}
+            {{(showSpinner ?  'BUTTONS.SAVING' : 'BUTTONS.SAVE') | translate}}
           </ion-button>
         </ion-col>
       </ion-row>

@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { IonRefresher, ModalController } from '@ionic/angular';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 
 import { Store } from '@ngrx/store';
+import { map } from 'rxjs/operators';
 import { User } from 'firebase';
 
 import { RecipesModalComponent } from './recipes-modal/recipes-modal.component';
@@ -10,9 +11,10 @@ import { RecipesSegments } from './commons/enums/recipes-segments.enum';
 import { ObservableHandler } from '../shared/models/observable-handler';
 import { user } from '../reducer';
 import { AutoUnsubscribe } from '../shared/decorators';
-import { map } from 'rxjs/operators';
 import { SingleRecipeItem } from './commons/interfaces/single-recipe-item.interface';
 import { RecipeModalMode } from './commons/enums/recipe-modal-mode.enum';
+import { FormControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @AutoUnsubscribe
 @Component({
@@ -23,6 +25,8 @@ import { RecipeModalMode } from './commons/enums/recipe-modal-mode.enum';
 })
 
 export class RecipesPageComponent implements OnInit, OnDestroy {
+
+    @ViewChild('refresherRef') private _refresherRef;
     recipesSegments = {
         [RecipesSegments.Products]: 'PAGES.RECIPES.SEGMENTS.PRODUCTS',
         [RecipesSegments.Sport]: 'PAGES.RECIPES.SEGMENTS.SPORT',
@@ -32,7 +36,10 @@ export class RecipesPageComponent implements OnInit, OnDestroy {
 
     // удалить, когда начнем качать реальные данные с сервера
     items: Array<SingleRecipeItem> = [];
+    filteredItems:  Array<SingleRecipeItem> = [];
     showSpinner = false;
+
+    searchBarForm: FormControl = new FormControl('');
 
     private _items$$;
 
@@ -43,6 +50,7 @@ export class RecipesPageComponent implements OnInit, OnDestroy {
     );
 
     private _itemsCollection: AngularFirestoreCollection<any>;
+    private _searchControlFormSubscription$: Subscription;
 
     constructor(public _modalController: ModalController,
                 private _store: Store<any>,
@@ -50,6 +58,13 @@ export class RecipesPageComponent implements OnInit, OnDestroy {
                 private _afs: AngularFirestore) {}
 
     ngOnInit(): void {
+        this._searchControlFormSubscription$ = this.searchBarForm.valueChanges.subscribe(res => {
+            this.filteredItems = this.items.filter(item => item.name.includes(res));
+        });
+    }
+
+    doRefresh() {
+        this._initCollection(this._user$$.latestValue);
     }
 
     segmentChanged(ev: any): void {
@@ -83,7 +98,7 @@ export class RecipesPageComponent implements OnInit, OnDestroy {
         });
         modal.onDidDismiss()
             .then((result) => {
-                if (result.data.id) {
+                if (result.data) {
                     this._itemsCollection.doc(result.data.id).update(result.data.collection).catch();
                 }
             });
@@ -109,8 +124,12 @@ export class RecipesPageComponent implements OnInit, OnDestroy {
         }
     }
 
-    private _prepareItems(item) {
+    private _prepareItems(item): void {
         this.items = item;
+        this.filteredItems = item;
+        if (this._refresherRef) {
+            this._refresherRef.complete();
+        }
         this.showSpinner = false;
     }
 

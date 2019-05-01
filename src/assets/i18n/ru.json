@@ -2,7 +2,8 @@
   "TABS": {
     "PROFILE": "Мои данные",
     "SIGN_IN": "Авторизация",
-    "RECIPES": "Мои рецепты"
+    "RECIPES": "Мои рецепты",
+    "CALORIMETER": "Учет калорий"
   },
   "PAGES": {
     "SIGN_IN": {
@@ -61,11 +62,20 @@
         "OK_BUTTON": "Ок",
         "CANCEL_BUTTON": "Отмена"
       }
+    },
+    "CALORIMETER": {
+
     }
   },
   "BUTTONS": {
     "OK_BUTTON": "Ок",
     "CANCEL_BUTTON": "Отмена",
-    "SAVE": "Сохранить"
+    "SAVE": "Сохранить",
+    "SAVING": "Сохранение",
+    "BACK": "Назад"
+  },
+  "REFRESHER": {
+    "PULL_DOWN": "Потяните вниз",
+    "REFRESHING": "Обновление данных..."
   }
 }
