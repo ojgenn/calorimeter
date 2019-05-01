@@ -13,6 +13,12 @@ import { AutoUnsubscribe } from '../shared/decorators';
 import { Subscription } from 'rxjs';
 import { safeDetectChanges } from '../shared/utils';
 
+export interface SingleRecipeItem {
+    type: RecipesSegments;
+    name: string;
+    calories: number;
+}
+
 @AutoUnsubscribe
 @Component({
     selector: 'app-recipes-page',
@@ -30,7 +36,7 @@ export class RecipesPageComponent implements OnInit, OnDestroy {
     activeSegment: RecipesSegments = RecipesSegments.Products;
 
     // удалить, когда начнем качать реальные данные с сервера
-    items = Array.from(Array(1000).keys());
+    items: Array<SingleRecipeItem> = [];
     showSpinner = false;
 
     private _user$$ = new ObservableHandler(
@@ -81,6 +87,7 @@ export class RecipesPageComponent implements OnInit, OnDestroy {
             .valueChanges()
             .subscribe(res => {
                 console.log(res);
+                this.items = res;
                 this.showSpinner = false;
                 safeDetectChanges(this._cdr);
             });
