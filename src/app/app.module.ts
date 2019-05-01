@@ -21,6 +21,8 @@ import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { AuthGuard } from './profile/services/auth-guard.service';
 import { SharedModule } from './shared/shared.module';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { ReactiveFormsModule } from '@angular/forms';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -56,6 +58,7 @@ const IMPORTS = [
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
+    AngularFirestoreModule,
 ];
 
 @NgModule({

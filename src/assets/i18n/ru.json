@@ -43,6 +43,12 @@
         "PRODUCTS": "Продукты",
         "SPORT": "Спорт, затраты энергии"
       },
+      "RECIPES_MODAL": {
+        "NAME": "Название",
+        "CALORIES": "Калорийность",
+        "CALORIES_PER_HOUR": "ккал/ч",
+        "CALORIES_PER_100_G": "ккал/100гр."
+      },
       "SEARCH": "Поиск",
       "ADD": "Добавить"
     },

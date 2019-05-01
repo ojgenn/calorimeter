@@ -2,7 +2,7 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RecipesPageComponent } from './recipes.page.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { RecipesModalComponent } from './recipes-modal/recipes-modal.component';
@@ -12,6 +12,7 @@ import { RecipesModalComponent } from './recipes-modal/recipes-modal.component';
         IonicModule,
         CommonModule,
         FormsModule,
+        ReactiveFormsModule,
         RouterModule.forChild([{ path: '', component: RecipesPageComponent }]),
         TranslateModule,
     ],
