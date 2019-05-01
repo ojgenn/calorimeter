@@ -28,7 +28,10 @@
   <ng-template #mainContent>
     <ion-virtual-scroll [items]="items">
         <div *virtualItem="let item">
-            <app-recipe [item]="item"></app-recipe>
+            <app-recipe [item]="item"
+                        (edit)="editItem($event)"
+                        (delete)="deleteItem($event)"
+                        (show)="showItem($event)"></app-recipe>
         </div>
     </ion-virtual-scroll>
   </ng-template>
