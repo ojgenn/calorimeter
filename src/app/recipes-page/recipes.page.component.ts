@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { IonRefresher, ModalController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
-import { User } from 'firebase';
 
+import { User } from 'firebase';
 import { RecipesModalComponent } from './recipes-modal/recipes-modal.component';
 import { RecipesSegments } from './commons/enums/recipes-segments.enum';
 import { ObservableHandler } from '../shared/models/observable-handler';
@@ -55,6 +56,7 @@ export class RecipesPageComponent implements OnInit, OnDestroy {
     constructor(public _modalController: ModalController,
                 private _store: Store<any>,
                 private _cdr: ChangeDetectorRef,
+                private _router: Router,
                 private _afs: AngularFirestore) {}
 
     ngOnInit(): void {

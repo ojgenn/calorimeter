@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
 import { AuthGuard } from '../profile/services/auth-guard.service';
+import { CalorimeterResolver } from '../calorimeter/commons/resolvers/calorimeter.resolver';
 
 const routes: Routes = [
     {
@@ -30,6 +31,9 @@ const routes: Routes = [
             {
                 path: 'calorimeter',
                 canActivate: [AuthGuard],
+                resolve: {
+                    calorimeter: CalorimeterResolver,
+                },
                 children: [
                     {
                         path: '',
@@ -55,6 +59,7 @@ const routes: Routes = [
     imports: [
         RouterModule.forChild(routes),
     ],
+    providers: [CalorimeterResolver],
     exports: [RouterModule],
 })
 export class TabsPageRoutingModule {
