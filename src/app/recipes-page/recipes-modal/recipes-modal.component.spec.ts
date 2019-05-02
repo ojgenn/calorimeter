@@ -12,7 +12,7 @@ describe('RecipesModalComponent', () => {
       declarations: [ RecipesModalComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
-    .compileComponents();
+    .compileComponents().catch();
   }));
 
   beforeEach(() => {

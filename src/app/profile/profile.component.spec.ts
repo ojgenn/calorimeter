@@ -12,7 +12,7 @@ describe('ProfileComponent', () => {
       declarations: [ ProfileComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
-    .compileComponents();
+    .compileComponents().catch();
   }));
 
   beforeEach(() => {

@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { Tab3Page } from './tab3.page';
+import { CalorimeterPageComponent } from './calorimeter.page.component';
 
 @NgModule({
     imports: [
@@ -13,9 +13,9 @@ import { Tab3Page } from './tab3.page';
         CommonModule,
         FormsModule,
         TranslateModule,
-        RouterModule.forChild([{ path: '', component: Tab3Page }]),
+        RouterModule.forChild([{ path: '', component: CalorimeterPageComponent }]),
     ],
-    declarations: [Tab3Page],
+    declarations: [CalorimeterPageComponent],
 })
-export class Tab3PageModule {
+export class CalorimeterModule {
 }
