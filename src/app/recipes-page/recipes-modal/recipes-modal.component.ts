@@ -4,9 +4,9 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { User } from 'firebase';
-import { RecipesSegments } from '../commons/enums/recipes-segments.enum';
 import { RecipeModalMode } from '../commons/enums/recipe-modal-mode.enum';
 import { SingleRecipeItem } from '../commons/interfaces/single-recipe-item.interface';
+import { RecipesSegments } from '../commons/enums/recipes-segments.enum';
 
 interface RecipesModalData {
     activeSegment: RecipesSegments;
@@ -62,7 +62,7 @@ export class RecipesModalComponent {
                 .catch(); // ToDo: Добавить вывод ошибки ['01.05.2019']
             return;
         }
-        this._modalCtrl.dismiss({collection, id: this.recipe.id}).catch();
+        this._modalCtrl.dismiss({ collection, id: this.recipe.id }).catch();
     }
 
     private _initRecipeModalForm(): FormGroup {

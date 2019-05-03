@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 
 import { SingleRecipeItem } from '../commons/interfaces/single-recipe-item.interface';
 import { RecipesSegments } from '../commons/enums/recipes-segments.enum';

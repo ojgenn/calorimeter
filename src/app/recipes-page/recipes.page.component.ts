@@ -35,7 +35,6 @@ export class RecipesPageComponent implements OnInit, OnDestroy {
     segments = RecipesSegments;
     activeSegment: RecipesSegments = RecipesSegments.Products;
 
-    // удалить, когда начнем качать реальные данные с сервера
     items: Array<SingleRecipeItem> = [];
     filteredItems:  Array<SingleRecipeItem> = [];
     showSpinner = false;

@@ -3,9 +3,9 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 
 import { Store } from '@ngrx/store';
 
-import * as RecipesActions from '../../../recipes-page/reducer/actions';
+import * as RecipesActions from '../../recipes-page/reducer/actions';
 
-import { AutoUnsubscribe } from '../../../shared/decorators';
+import { AutoUnsubscribe } from '../../shared/decorators';
 
 @AutoUnsubscribe
 @Injectable()

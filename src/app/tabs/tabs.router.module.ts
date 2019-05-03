@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
 import { AuthGuard } from '../profile/services/auth-guard.service';
-import { CalorimeterResolver } from '../calorimeter/commons/resolvers/calorimeter.resolver';
+import { CalorimeterResolver } from '../calorimeter/resolvers/calorimeter.resolver';
 
 const routes: Routes = [
     {
