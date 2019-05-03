@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CalorimeterPurpose } from '../commons/enums/calorimeter-purpose.enum';
 import { calorimeterPurposeLabels } from '../commons/models/calorimeter-purpose-labels.model';
 
 @Component({

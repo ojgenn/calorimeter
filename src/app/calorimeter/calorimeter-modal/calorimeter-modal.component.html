@@ -6,11 +6,39 @@
       </ion-button>
     </ion-buttons>
     <ion-title [ngSwitch]="">
-      <span>Добавление</span>
+      <span>{{'PAGES.RECIPES.ADD' | translate}}</span>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding color="medium">
+  <ion-item color="medium">
+    {{listLabel[data.mode].name | translate}}
+  </ion-item>
+  <form [formGroup]="calorimeterForm">
 
+    <ion-item>
+      <ion-label position="floating"
+                 color="{{ calorimeterForm.controls.name.errors && calorimeterForm.controls.name.dirty ? 'danger' : 'medium' }}">
+        {{'PAGES.RECIPES.RECIPES_MODAL.NAME' |translate}}
+      </ion-label>
+      <ion-input formControlName="name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating"
+                 color="{{ calorimeterForm.controls.quantity.errors && calorimeterForm.controls.quantity.dirty ? 'danger' : 'medium' }}">
+        {{'PAGES.RECIPES.RECIPES_MODAL.CALORIES' |translate}}
+      </ion-label>
+      <ion-input formControlName="quantity"></ion-input>
+    </ion-item>
+
+    <ion-row>
+      <ion-col>
+        <ion-button [disabled]="calorimeterForm.invalid" (click)="save()">
+          {{'BUTTONS.SAVE' | translate}}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
 </ion-content>

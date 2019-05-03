@@ -24,6 +24,7 @@ export class CalorimeterSingleListComponent implements OnInit {
             component: CalorimeterModalComponent,
             componentProps: {
                 data: {
+                    mode: this.mode
                 }
             },
         });
