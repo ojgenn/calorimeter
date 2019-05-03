@@ -1,9 +1,11 @@
-import { Test } from './recipes.actions';
+import { AddRecipes, AddRecipesSuccess } from './recipes.actions';
 
 export enum ActionTypes {
-    Test = '[Calorimeter] Test',
+    AddRecipes = '[Recipes] Add Recipes',
+    AddRecipesSuccess = '[Recipes] Add Recipes Success',
 }
 
 
 export type RecipesActions =
-    | Test;
+    | AddRecipes
+    | AddRecipesSuccess;

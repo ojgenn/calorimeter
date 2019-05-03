@@ -1,5 +1,6 @@
-import { RecipesActions } from '../actions/types';
+import { ActionTypes, RecipesActions } from '../actions/types';
 import { SingleRecipeItem } from '../../commons/interfaces/single-recipe-item.interface';
+import { fuse } from '../../../shared/utils';
 
 export interface State {
     products: Array<SingleRecipeItem>;
@@ -16,6 +17,15 @@ export function recipesReducer(
     action: RecipesActions,
 ): State {
     switch (action.type) {
+        case ActionTypes.AddRecipesSuccess:
+            if (!action.payload || action.payload.length === 0) {
+                return state;
+            }
+            const type = action.payload[0].type;
+            return fuse<State>(state, {
+                [type]: action.payload,
+            });
+        case ActionTypes.AddRecipes:
         default: {
             return state;
         }
