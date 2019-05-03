@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CalorimeterPurpose } from '../commons/enums/calorimeter-purpose.enum';
+import { calorimeterPurposeLabels } from '../commons/models/calorimeter-purpose-labels.model';
 
 @Component({
   selector: 'app-calorimeter-main-content',
@@ -8,7 +8,7 @@ import { CalorimeterPurpose } from '../commons/enums/calorimeter-purpose.enum';
 })
 export class CalorimeterMainContentComponent implements OnInit {
 
-  calorimeterPurpose = CalorimeterPurpose;
+  calorimeterPurpose = calorimeterPurposeLabels.asArray;
   constructor() { }
 
   ngOnInit() {}
