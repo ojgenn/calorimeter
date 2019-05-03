@@ -12,7 +12,10 @@ import { calorimeterReducer } from './reducer/reducers/calorimeter.reducer';
 import { CalorimeterHeaderComponent } from './calorimeter-header/calorimeter-header.component';
 import { CalorimeterMainContentComponent } from './calorimeter-main-content/calorimeter-main-content.component';
 import { CalorimeterSingleListComponent } from './calorimeter-main-content/calorimeter-single-list/calorimeter-single-list.component';
-import { CalorimeterSingleItemComponent } from './calorimeter-main-content/calorimeter-single-list/calorimeter-single-item/calorimeter-single-item.component';
+import {
+    CalorimeterSingleItemComponent,
+} from './calorimeter-main-content/calorimeter-single-list/calorimeter-single-item/calorimeter-single-item.component';
+import { CalorimeterModalComponent } from './calorimeter-modal/calorimeter-modal.component';
 
 const COMPONENTS = [
     CalorimeterPageComponent,
@@ -20,6 +23,7 @@ const COMPONENTS = [
     CalorimeterMainContentComponent,
     CalorimeterSingleListComponent,
     CalorimeterSingleItemComponent,
+    CalorimeterModalComponent,
 ];
 
 const IMPORTS = [
@@ -35,6 +39,7 @@ const IMPORTS = [
 @NgModule({
     imports: [IMPORTS],
     declarations: [COMPONENTS],
+    entryComponents: [CalorimeterModalComponent],
 })
 export class CalorimeterModule {
 }
