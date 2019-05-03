@@ -64,7 +64,18 @@
       }
     },
     "CALORIMETER": {
-
+      "HEADER": {
+        "PURPOSE": "Цель",
+        "FOOD": "Прием пищи",
+        "SPORT": "Спорт",
+        "SUMMARY": "Итого"
+      },
+      "PURPOSE_LABELS": {
+        "BREAKFAST": "Завтрак",
+        "LUNCH": "Обед",
+        "DINNER": "Ужин",
+        "ACTIVITY": "Активность"
+      }
     }
   },
   "BUTTONS": {

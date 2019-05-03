@@ -1,0 +1,12 @@
+<p>
+    <ion-item>
+        <ion-label>{{listLabel[mode].name | translate}}</ion-label>
+        <ion-buttons slot="start">
+            <ion-button color="medium">
+                <ion-icon name="add-circle"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-badge color="medium" slot="end">88</ion-badge>
+    </ion-item>
+    <app-calorimeter-single-item *ngFor="let item of [1 , 2]"></app-calorimeter-single-item>
+</p>

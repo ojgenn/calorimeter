@@ -5,4 +5,11 @@ import { Component } from '@angular/core';
   templateUrl: 'calorimeter.page.component.html',
   styleUrls: ['calorimeter.page.component.scss']
 })
-export class CalorimeterPageComponent {}
+export class CalorimeterPageComponent {
+
+  date = new Date().toISOString();
+
+  dateChanged(e) {
+    console.log(e);
+  }
+}
