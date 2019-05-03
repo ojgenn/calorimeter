@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+
 import { CalorimeterPurpose } from '../../commons/enums/calorimeter-purpose.enum';
 import { calorimeterPurposeLabels } from '../../commons/models/calorimeter-purpose-labels.model';
+import { CalorimeterModalComponent } from '../../calorimeter-modal/calorimeter-modal.component';
 
 @Component({
     selector: 'app-calorimeter-single-list',
@@ -12,8 +15,26 @@ export class CalorimeterSingleListComponent implements OnInit {
 
     listLabel = calorimeterPurposeLabels.map;
 
-    constructor() { console.log(this.listLabel); }
+    constructor(public _modalController: ModalController) {}
 
     ngOnInit() {}
+
+    async presentModal(): Promise<void> {
+        const modal: HTMLIonModalElement = await this._modalController.create({
+            component: CalorimeterModalComponent,
+            componentProps: {
+                data: {
+                }
+            },
+        });
+        modal.onDidDismiss()
+            .then((result) => {
+                if (result.data) {
+                    console.log(result.data);
+                }
+            });
+
+        return await modal.present();
+    }
 
 }
