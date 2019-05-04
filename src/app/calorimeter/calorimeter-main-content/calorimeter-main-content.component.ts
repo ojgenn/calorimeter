@@ -11,6 +11,8 @@ import { CalorimeterPurpose } from '../commons/enums/calorimeter-purpose.enum';
 export class CalorimeterMainContentComponent implements OnInit {
 
     @Input() userData: CalorimeterUserData;
+    @Input() date: string;
+
     calorimeterPurposeLabelsAsArray = calorimeterPurposeLabels.asArray;
     calorimeterPurpose = CalorimeterPurpose;
 

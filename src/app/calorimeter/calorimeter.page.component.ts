@@ -6,13 +6,14 @@ import { User } from 'firebase';
 import { products, sport, user } from '../reducer';
 import { ObservableHandler } from '../shared/models/observable-handler';
 import { SingleRecipeItem } from '../recipes-page/commons/interfaces/single-recipe-item.interface';
-import { safeDetectChanges } from '../shared/utils';
+import { objectCopy, safeDetectChanges } from '../shared/utils';
 
 export interface CalorimeterUserData {
     products: Array<SingleRecipeItem>;
     sport: Array<SingleRecipeItem>;
     uid: User['uid'];
 }
+
 @Component({
     selector: 'app-tab3',
     templateUrl: 'calorimeter.page.component.html',
@@ -21,21 +22,23 @@ export interface CalorimeterUserData {
 })
 export class CalorimeterPageComponent {
 
-    statesData = new ObservableHandler(
+    private _statesData$$ = new ObservableHandler(
         combineLatest([
                 this._store.select(products),
                 this._store.select(sport),
                 this._store.select(user),
             ],
         ).pipe(
-            map(([userProducts, userSport, userData]) => ({products: userProducts, sport: userSport, uid: userData.uid}))
+            map(([userProducts, userSport, userData]) => ({ products: userProducts, sport: userSport, uid: userData.uid })),
         ),
         this._prepareStateData.bind(this),
         this._cdr,
     );
     date = new Date().toISOString();
 
-    userData: CalorimeterUserData = {products: [], sport: [], uid: null};
+    uid: User['uid'];
+
+    userData: CalorimeterUserData;
 
     constructor(private _store: Store<any>,
                 private _cdr: ChangeDetectorRef) {}
@@ -45,7 +48,7 @@ export class CalorimeterPageComponent {
     }
 
     private _prepareStateData(userData: CalorimeterUserData): void {
-        this.userData = userData;
+        this.userData = objectCopy(userData);
         safeDetectChanges(this._cdr);
     }
 }

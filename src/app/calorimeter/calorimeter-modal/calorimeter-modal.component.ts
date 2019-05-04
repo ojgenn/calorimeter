@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { IonicSelectableComponent } from 'ionic-selectable';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 import { Subscription } from 'rxjs';
 
@@ -9,10 +9,13 @@ import { calorimeterPurposeLabels } from '../commons/models/calorimeter-purpose-
 import { CalorimeterPurpose } from '../commons/enums/calorimeter-purpose.enum';
 import { AutoUnsubscribe } from '../../shared/decorators';
 import { SingleRecipeItem } from '../../recipes-page/commons/interfaces/single-recipe-item.interface';
+import { User } from 'firebase';
 
 interface CalorimeterModalData {
     mode: CalorimeterPurpose;
     recipes: Array<SingleRecipeItem>;
+    date: string;
+    uid: User['uid'];
 }
 
 @AutoUnsubscribe
@@ -32,12 +35,13 @@ export class CalorimeterModalComponent implements OnInit, OnDestroy {
         name: new FormControl('', [Validators.required]),
         searchByNameCheckBox: new FormControl(true),
         quantity: new FormControl('',
-            [Validators.required, Validators.pattern('^([\\d]+)([,.]?\\d{1,2})$')]),
+            [Validators.required, Validators.pattern('^([\\d]+)([,.]?[\\d]?)$')]),
     });
 
     private _calorimeterFormSubscription$: Subscription;
 
     constructor(private _modalCtrl: ModalController,
+                private _afs: AngularFirestore,
                 private _formBuilder: FormBuilder) {}
 
     ngOnInit(): void {
@@ -57,13 +61,22 @@ export class CalorimeterModalComponent implements OnInit, OnDestroy {
     }
 
     save(): void {
-        const result = {
+        if (!this.data.uid) {
+            this.close();
+        }
+        const quantity = this.calorimeterForm.controls.quantity.value.replace(',', '.');
+        const collection = {
             [this.data.mode]: {
                 recipe: this.calorimeterForm.controls.name ? this.calorimeterForm.controls.name.value : null,
-                quantity: this.calorimeterForm.controls.quantity.value,
+                quantity,
             },
         };
-        console.log(result);
+        this._afs.collection(this.data.uid)
+            .doc('calorimeter')
+            .collection(this.data.date.slice(0, 10))
+            .add(collection)
+            .then(res => this.close())
+            .catch(); // ToDo: Добавить вывод ошибки ['05.05.2019']
     }
 
     ngOnDestroy(): void {}

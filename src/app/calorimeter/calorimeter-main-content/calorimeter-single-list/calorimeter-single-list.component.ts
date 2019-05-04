@@ -5,6 +5,7 @@ import { CalorimeterPurpose } from '../../commons/enums/calorimeter-purpose.enum
 import { calorimeterPurposeLabels } from '../../commons/models/calorimeter-purpose-labels.model';
 import { CalorimeterModalComponent } from '../../calorimeter-modal/calorimeter-modal.component';
 import { SingleRecipeItem } from '../../../recipes-page/commons/interfaces/single-recipe-item.interface';
+import { User } from 'firebase';
 
 @Component({
     selector: 'app-calorimeter-single-list',
@@ -14,6 +15,8 @@ import { SingleRecipeItem } from '../../../recipes-page/commons/interfaces/singl
 export class CalorimeterSingleListComponent implements OnInit {
     @Input() mode: CalorimeterPurpose;
     @Input() recipes: Array<SingleRecipeItem>;
+    @Input() date: string;
+    @Input() uid: User['uid'];
 
     listLabel = calorimeterPurposeLabels.map;
 
@@ -28,6 +31,8 @@ export class CalorimeterSingleListComponent implements OnInit {
                 data: {
                     mode: this.mode,
                     recipes: this.recipes,
+                    date: this.date,
+                    uid: this.uid,
                 }
             },
         });
