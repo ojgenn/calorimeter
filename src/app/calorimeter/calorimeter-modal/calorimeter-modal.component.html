@@ -1,44 +1,68 @@
 <ion-header>
-  <ion-toolbar color="dark">
-    <ion-buttons slot="primary">
-      <ion-button color="medium" (click)="close()">
-        <ion-icon name="close-circle"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title [ngSwitch]="">
-      <span>{{'PAGES.RECIPES.ADD' | translate}}</span>
-    </ion-title>
-  </ion-toolbar>
+    <ion-toolbar color="dark">
+        <ion-buttons slot="primary">
+            <ion-button color="medium" (click)="close()">
+                <ion-icon name="close-circle"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title [ngSwitch]="">
+            <span>{{'PAGES.RECIPES.ADD' | translate}}</span>
+        </ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content padding color="medium">
-  <ion-item color="medium">
-    {{listLabel[data.mode].name | translate}}
-  </ion-item>
-  <form [formGroup]="calorimeterForm">
-
-    <ion-item>
-      <ion-label position="floating"
-                 color="{{ calorimeterForm.controls.name.errors && calorimeterForm.controls.name.dirty ? 'danger' : 'medium' }}">
-        {{'PAGES.RECIPES.RECIPES_MODAL.NAME' |translate}}
-      </ion-label>
-      <ion-input formControlName="name"></ion-input>
+    <ion-item color="medium">
+        {{listLabel[data.mode].name | translate}}
     </ion-item>
 
-    <ion-item>
-      <ion-label position="floating"
-                 color="{{ calorimeterForm.controls.quantity.errors && calorimeterForm.controls.quantity.dirty ? 'danger' : 'medium' }}">
-        {{'PAGES.RECIPES.RECIPES_MODAL.CALORIES' |translate}}
-      </ion-label>
-      <ion-input formControlName="quantity"></ion-input>
-    </ion-item>
+    <form [formGroup]="calorimeterForm">
 
-    <ion-row>
-      <ion-col>
-        <ion-button [disabled]="calorimeterForm.invalid" (click)="save()">
-          {{'BUTTONS.SAVE' | translate}}
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </form>
+        <ion-item>
+            <ion-label>{{'PAGES.CALORIMETER.CALORIES_MODAL.SEARCH_BY_NAME_CHECK_BOX' | translate}}</ion-label>
+            <ion-checkbox slot="end" formControlName="searchByNameCheckBox" checked="true"></ion-checkbox>
+        </ion-item>
+        <ion-item *ngIf="!!calorimeterForm.controls.searchByNameCheckBox.value">
+            <ion-label position="floating"
+                       color="{{ calorimeterForm.controls.name.errors && calorimeterForm.controls.name.dirty ? 'danger' : 'medium' }}">
+                {{'PAGES.RECIPES.RECIPES_MODAL.NAME' |translate}}
+            </ion-label>
+            <ionic-selectable
+                    item-content
+                    formControlName="name"
+                    [items]="data.recipes"
+                    itemValueField="id"
+                    itemTextField="name"
+                    [canSearch]="true">
+            </ionic-selectable>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="floating"
+                       color="{{ calorimeterForm.controls.quantity.errors && calorimeterForm.controls.quantity.dirty ? 'danger' : 'medium' }}">
+                <span *ngIf="!!calorimeterForm.controls.searchByNameCheckBox.value; else hasName">
+                  <ng-container *ngIf="data.mode === calorimeterPurpose.Activity; else noneActivity">
+                    {{'PAGES.CALORIMETER.CALORIES_MODAL.DURATION' | translate}}
+                  </ng-container>
+                </span>
+            </ion-label>
+            <ion-input formControlName="quantity"></ion-input>
+        </ion-item>
+
+        <ion-row>
+            <ion-col>
+                <ion-button [disabled]="calorimeterForm.invalid" (click)="save()">
+                    {{'BUTTONS.SAVE' | translate}}
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </form>
 </ion-content>
+
+<ng-template #hasName>
+    {{'PAGES.CALORIMETER.CALORIES_MODAL.CALORIE' | translate}}
+</ng-template>
+
+<ng-template #noneActivity>
+    {{'PAGES.CALORIMETER.CALORIES_MODAL.QUANTITY' | translate}}
+</ng-template>
