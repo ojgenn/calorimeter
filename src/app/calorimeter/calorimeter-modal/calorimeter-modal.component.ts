@@ -1,11 +1,12 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { calorimeterPurposeLabels } from '../commons/models/calorimeter-purpose-labels.model';
-import { CalorimeterPurpose } from '../commons/enums/calorimeter-purpose.enum';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { IonicSelectableComponent } from 'ionic-selectable';
 
 import { Subscription } from 'rxjs';
 
+import { calorimeterPurposeLabels } from '../commons/models/calorimeter-purpose-labels.model';
+import { CalorimeterPurpose } from '../commons/enums/calorimeter-purpose.enum';
 import { AutoUnsubscribe } from '../../shared/decorators';
 import { SingleRecipeItem } from '../../recipes-page/commons/interfaces/single-recipe-item.interface';
 
@@ -26,6 +27,14 @@ export class CalorimeterModalComponent implements OnInit, OnDestroy {
 
     listLabel = calorimeterPurposeLabels.map;
     calorimeterPurpose = CalorimeterPurpose;
+
+    port;
+
+    ports = [
+        { id: 1, name: 'Tokai' },
+        { id: 2, name: 'Vladivostok' },
+        { id: 3, name: 'Navlakhi' }
+    ];
 
     calorimeterForm = this._formBuilder.group({
         name: new FormControl('', [Validators.required]),
@@ -60,9 +69,16 @@ export class CalorimeterModalComponent implements OnInit, OnDestroy {
             [this.data.mode]: {
                 recipe: this.calorimeterForm.controls.name ? this.calorimeterForm.controls.name.value : null,
                 quantity: this.calorimeterForm.controls.quantity.value,
-            }
+            },
         };
         console.log(result);
+    }
+
+    portChange(event: {
+        component: IonicSelectableComponent,
+        value: any
+    }) {
+        console.log('port:', event.value);
     }
 
     ngOnDestroy(): void {}

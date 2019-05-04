@@ -16,6 +16,7 @@ import {
     CalorimeterSingleItemComponent,
 } from './calorimeter-main-content/calorimeter-single-list/calorimeter-single-item/calorimeter-single-item.component';
 import { CalorimeterModalComponent } from './calorimeter-modal/calorimeter-modal.component';
+import { IonicSelectableModule } from 'ionic-selectable';
 
 const COMPONENTS = [
     CalorimeterPageComponent,
@@ -32,6 +33,7 @@ const IMPORTS = [
     FormsModule,
     ReactiveFormsModule,
     TranslateModule,
+    IonicSelectableModule,
     StoreModule.forFeature('calorimeter', calorimeterReducer),
     RouterModule.forChild([{ path: '', component: CalorimeterPageComponent }]),
 ];
