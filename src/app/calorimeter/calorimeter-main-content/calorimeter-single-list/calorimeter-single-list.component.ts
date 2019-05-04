@@ -4,6 +4,7 @@ import { ModalController } from '@ionic/angular';
 import { CalorimeterPurpose } from '../../commons/enums/calorimeter-purpose.enum';
 import { calorimeterPurposeLabels } from '../../commons/models/calorimeter-purpose-labels.model';
 import { CalorimeterModalComponent } from '../../calorimeter-modal/calorimeter-modal.component';
+import { SingleRecipeItem } from '../../../recipes-page/commons/interfaces/single-recipe-item.interface';
 
 @Component({
     selector: 'app-calorimeter-single-list',
@@ -12,6 +13,7 @@ import { CalorimeterModalComponent } from '../../calorimeter-modal/calorimeter-m
 })
 export class CalorimeterSingleListComponent implements OnInit {
     @Input() mode: CalorimeterPurpose;
+    @Input() recipes: Array<SingleRecipeItem>;
 
     listLabel = calorimeterPurposeLabels.map;
 
@@ -24,7 +26,8 @@ export class CalorimeterSingleListComponent implements OnInit {
             component: CalorimeterModalComponent,
             componentProps: {
                 data: {
-                    mode: this.mode
+                    mode: this.mode,
+                    recipes: this.recipes,
                 }
             },
         });

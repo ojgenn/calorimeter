@@ -17,7 +17,14 @@
   </ion-item>
   <form [formGroup]="calorimeterForm">
 
-    <ion-item>
+    <ion-list>
+      <ion-item>
+        <ion-label>{{'PAGES.CALORIMETER.CALORIES_MODAL.SEARCH_BY_NAME_CHECK_BOX' | translate}}</ion-label>
+        <ion-checkbox slot="end" formControlName="searchByNameCheckBox" checked="true"></ion-checkbox>
+      </ion-item>
+    </ion-list>
+
+    <ion-item *ngIf="!!calorimeterForm.controls.name">
       <ion-label position="floating"
                  color="{{ calorimeterForm.controls.name.errors && calorimeterForm.controls.name.dirty ? 'danger' : 'medium' }}">
         {{'PAGES.RECIPES.RECIPES_MODAL.NAME' |translate}}
@@ -28,7 +35,11 @@
     <ion-item>
       <ion-label position="floating"
                  color="{{ calorimeterForm.controls.quantity.errors && calorimeterForm.controls.quantity.dirty ? 'danger' : 'medium' }}">
-        {{'PAGES.RECIPES.RECIPES_MODAL.CALORIES' |translate}}
+        <span *ngIf="!!calorimeterForm.controls.searchByNameCheckBox.value; else hasName">
+          <ng-container *ngIf="data.mode === calorimeterPurpose.Activity; else noneActivity">
+            {{'PAGES.CALORIMETER.CALORIES_MODAL.DURATION' | translate}}
+          </ng-container>
+        </span>
       </ion-label>
       <ion-input formControlName="quantity"></ion-input>
     </ion-item>
@@ -42,3 +53,11 @@
     </ion-row>
   </form>
 </ion-content>
+
+<ng-template #hasName>
+    {{'PAGES.CALORIMETER.CALORIES_MODAL.CALORIE' | translate}}
+</ng-template>
+
+<ng-template #noneActivity>
+    {{'PAGES.CALORIMETER.CALORIES_MODAL.QUANTITY' | translate}}
+</ng-template>
