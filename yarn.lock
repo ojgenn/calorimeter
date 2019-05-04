@@ -3201,6 +3201,10 @@ invert-kv@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-2.0.0.tgz#7393f5afa59ec9ff5f67a27620d11c226e3eec02"
 
+ionic-select-searchable@^2.10.0:
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/ionic-select-searchable/-/ionic-select-searchable-2.10.0.tgz#16f502c18cae19c0d3dde3624755093e80cf37ef"
+
 ionicons@4.5.6:
   version "4.5.6"
   resolved "https://registry.yarnpkg.com/ionicons/-/ionicons-4.5.6.tgz#f3b5d2446e7e1b30e67ddcd1fc563271acc60f3c"

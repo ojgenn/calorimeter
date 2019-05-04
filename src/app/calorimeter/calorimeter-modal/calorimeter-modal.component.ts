@@ -24,8 +24,9 @@ export class CalorimeterModalComponent implements OnInit, OnDestroy {
 
     listLabel = calorimeterPurposeLabels.map;
     calorimeterPurpose = CalorimeterPurpose;
+
     calorimeterForm = this._formBuilder.group({
-        name: new FormControl('hVMmszc0EN8K9cCkuOlz', [Validators.required]),
+        name: new FormControl('', [Validators.required]),
         searchByNameCheckBox: new FormControl(true),
         quantity: new FormControl('',
             [Validators.required, Validators.pattern('^([\\d]+)([,.]?\\d{1,2})$')]),
@@ -41,7 +42,7 @@ export class CalorimeterModalComponent implements OnInit, OnDestroy {
             if (!!this.calorimeterForm.controls.searchByNameCheckBox.value) {
                 this.calorimeterForm
                     .addControl('name',
-                        new FormControl('hVMmszc0EN8K9cCkuOlz', [Validators.required]));
+                        new FormControl('', [Validators.required]));
             } else {
                 this.calorimeterForm.removeControl('name');
             }
