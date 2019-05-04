@@ -76,7 +76,13 @@
         "DINNER": "Ужин",
         "ACTIVITY": "Активность"
       },
-      "GET_DATE": "Выберите дату"
+      "GET_DATE": "Выберите дату",
+      "CALORIES_MODAL": {
+        "SEARCH_BY_NAME_CHECK_BOX": "Вести поиск по имени",
+        "CALORIE": "Калорийность, ккал",
+        "QUANTITY": "Количество, гр.",
+        "DURATION": "Продолжительность, час."
+      }
     }
   },
   "BUTTONS": {

@@ -32,3 +32,5 @@ export function recipesReducer(
     }
 }
 
+export const products = (state: State) => state.products;
+export const sport = (state: State) => state.sport;

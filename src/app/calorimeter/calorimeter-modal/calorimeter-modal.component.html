@@ -17,14 +17,7 @@
   </ion-item>
   <form [formGroup]="calorimeterForm">
 
-    <ion-list>
-      <ion-item>
-        <ion-label>Вести поиск продукта</ion-label>
-        <ion-checkbox slot="end" formControlName="searchByName" checked="true"></ion-checkbox>
-      </ion-item>
-    </ion-list>
-
-    <ion-item *ngIf="!!calorimeterForm.controls.searchByName.value">
+    <ion-item>
       <ion-label position="floating"
                  color="{{ calorimeterForm.controls.name.errors && calorimeterForm.controls.name.dirty ? 'danger' : 'medium' }}">
         {{'PAGES.RECIPES.RECIPES_MODAL.NAME' |translate}}
@@ -35,11 +28,7 @@
     <ion-item>
       <ion-label position="floating"
                  color="{{ calorimeterForm.controls.quantity.errors && calorimeterForm.controls.quantity.dirty ? 'danger' : 'medium' }}">
-        <span *ngIf="!!calorimeterForm.controls.searchByName.value; else hasName">
-          <ng-container *ngIf="data.mode === calorimeterPurpose.Activity; else noneActivity">
-            Продолжительность, час.
-          </ng-container>
-        </span>
+        {{'PAGES.RECIPES.RECIPES_MODAL.CALORIES' |translate}}
       </ion-label>
       <ion-input formControlName="quantity"></ion-input>
     </ion-item>
@@ -53,11 +42,3 @@
     </ion-row>
   </form>
 </ion-content>
-
-<ng-template #hasName>
-  Калорийность, ккал
-</ng-template>
-
-<ng-template #noneActivity>
-  Количество, гр.
-</ng-template>
