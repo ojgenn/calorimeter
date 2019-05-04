@@ -43,5 +43,6 @@ const IMPORTS = [
     declarations: [COMPONENTS],
     entryComponents: [CalorimeterModalComponent],
 })
+
 export class CalorimeterModule {
 }
