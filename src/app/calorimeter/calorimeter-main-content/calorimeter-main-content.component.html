@@ -1,5 +1,5 @@
 <ion-list>
-    <app-calorimeter-single-list *ngFor="let mode of calorimeterPurpose"
-                                 [mode]="mode.key">
+    <app-calorimeter-single-list *ngFor="let mode of calorimeterPurposeLabelsAsArray"
+                                 [mode]="mode.key" [recipes]="mode.key === calorimeterPurpose.Activity ? userData.sport : userData.products">
     </app-calorimeter-single-list>
 </ion-list>
