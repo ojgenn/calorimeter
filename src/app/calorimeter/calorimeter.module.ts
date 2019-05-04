@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SelectSearchableModule } from 'ionic-select-searchable';
 import { IonicModule } from '@ionic/angular';
 
 import { TranslateModule } from '@ngx-translate/core';
@@ -33,7 +32,6 @@ const IMPORTS = [
     FormsModule,
     ReactiveFormsModule,
     TranslateModule,
-    SelectSearchableModule,
     StoreModule.forFeature('calorimeter', calorimeterReducer),
     RouterModule.forChild([{ path: '', component: CalorimeterPageComponent }]),
 ];

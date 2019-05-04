@@ -3,7 +3,9 @@ import { ModalController } from '@ionic/angular';
 import { calorimeterPurposeLabels } from '../commons/models/calorimeter-purpose-labels.model';
 import { CalorimeterPurpose } from '../commons/enums/calorimeter-purpose.enum';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+
 import { Subscription } from 'rxjs';
+
 import { AutoUnsubscribe } from '../../shared/decorators';
 import { SingleRecipeItem } from '../../recipes-page/commons/interfaces/single-recipe-item.interface';
 
@@ -61,10 +63,6 @@ export class CalorimeterModalComponent implements OnInit, OnDestroy {
             }
         };
         console.log(result);
-    }
-
-    getName(id) {
-        return this.data.recipes.find(item => item.id === id).name;
     }
 
     ngOnDestroy(): void {}
