@@ -17,7 +17,7 @@ export function recipesReducer(
     action: RecipesActions,
 ): State {
     switch (action.type) {
-        case ActionTypes.AddRecipesSuccess:
+        case ActionTypes.GetRecipesSuccess:
             if (!action.payload || action.payload.length === 0) {
                 return state;
             }
@@ -25,7 +25,7 @@ export function recipesReducer(
             return fuse<State>(state, {
                 [type]: action.payload,
             });
-        case ActionTypes.AddRecipes:
+        case ActionTypes.GetRecipes:
         default: {
             return state;
         }

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+
 import { calorimeterPurposeLabels } from '../commons/models/calorimeter-purpose-labels.model';
 import { CalorimeterUserData } from '../calorimeter.page.component';
 import { CalorimeterPurpose } from '../commons/enums/calorimeter-purpose.enum';
@@ -16,7 +17,7 @@ export class CalorimeterMainContentComponent implements OnInit {
     calorimeterPurposeLabelsAsArray = calorimeterPurposeLabels.asArray;
     calorimeterPurpose = CalorimeterPurpose;
 
-    constructor() { }
+    constructor() {}
 
     ngOnInit() {}
 

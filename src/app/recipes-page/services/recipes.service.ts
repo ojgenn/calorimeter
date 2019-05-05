@@ -7,6 +7,7 @@ import { merge, Observable } from 'rxjs';
 
 import { user } from '../../reducer';
 import { RecipesSegments } from '../commons/enums/recipes-segments.enum';
+import { SingleRecipeItem } from '../commons/interfaces/single-recipe-item.interface';
 
 @Injectable({
     providedIn: 'root',

@@ -22,7 +22,8 @@ export class CalorimeterSingleListComponent implements OnInit {
 
     constructor(public _modalController: ModalController) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+    }
 
     async presentModal(): Promise<void> {
         const modal: HTMLIonModalElement = await this._modalController.create({

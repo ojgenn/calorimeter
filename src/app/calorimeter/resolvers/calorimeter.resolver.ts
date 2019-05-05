@@ -17,7 +17,7 @@ export class CalorimeterResolver implements Resolve<boolean> {
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot,
     ): boolean {
-        this._store.dispatch(new RecipesActions.AddRecipes());
+        this._store.dispatch(new RecipesActions.GetRecipes());
         return true;
     }
 }
