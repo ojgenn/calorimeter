@@ -17,6 +17,9 @@ import {
 } from './calorimeter-main-content/calorimeter-single-list/calorimeter-single-item/calorimeter-single-item.component';
 import { CalorimeterModalComponent } from './calorimeter-modal/calorimeter-modal.component';
 import { IonicSelectableModule } from 'ionic-selectable';
+import { EffectsModule } from '@ngrx/effects';
+import { CalorimeterEffects } from './effects/calorimeter.effects';
+import { CalorimeterService } from './services/calorimeter.service';
 
 const COMPONENTS = [
     CalorimeterPageComponent,
@@ -34,6 +37,7 @@ const IMPORTS = [
     ReactiveFormsModule,
     TranslateModule,
     IonicSelectableModule,
+    EffectsModule.forRoot([CalorimeterEffects]),
     StoreModule.forFeature('calorimeter', calorimeterReducer),
     RouterModule.forChild([{ path: '', component: CalorimeterPageComponent }]),
 ];
@@ -42,7 +46,9 @@ const IMPORTS = [
     imports: [IMPORTS],
     declarations: [COMPONENTS],
     entryComponents: [CalorimeterModalComponent],
+    providers: [CalorimeterService]
 })
 
 export class CalorimeterModule {
+    constructor(private _calorimeterService: CalorimeterService) {}
 }

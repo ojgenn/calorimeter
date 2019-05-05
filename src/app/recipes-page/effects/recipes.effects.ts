@@ -21,10 +21,10 @@ export class RecipesEffects {
     @Effect()
     loadRecipes$ = this._actions$
         .pipe(
-            ofType(Recipes.ActionTypes.AddRecipes),
+            ofType(Recipes.ActionTypes.GetRecipes),
             mergeMap(() => this._recipesService.getRecipes()
                 .pipe(
-                    map((recipes: Array<SingleRecipeItem>) => new RecipesActions.AddRecipesSuccess(recipes)),
+                    map((recipes: Array<SingleRecipeItem>) => new RecipesActions.GetRecipesSuccess(recipes)),
                     catchError(() => EMPTY),
                 )),
         );
