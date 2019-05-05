@@ -1,8 +1,9 @@
 <ion-item-sliding #slidingItem>
   <ion-item>
     <ion-label>
-      название продукта
+      {{item.name}}
     </ion-label>
+    <ion-badge color="medium" slot="end">{{item.calories}}</ion-badge>
   </ion-item>
   <ion-item-options>
     <ion-item-option color="danger">

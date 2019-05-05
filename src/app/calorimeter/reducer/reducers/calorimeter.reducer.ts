@@ -1,5 +1,6 @@
 import { ActionTypes, CalorimeterActions } from '../actions';
 import { fuse } from '../../../shared/utils';
+import { CalorimeterPurpose } from '../../commons/enums/calorimeter-purpose.enum';
 
 export interface State {
     dailyCalories: Array<any>; // ToDo: типизировать ['06/05/19']
@@ -15,7 +16,9 @@ export function calorimeterReducer(
 ): State {
     switch (action.type) {
         case ActionTypes.GetDailyCaloriesSuccess:
-            console.log(action.payload);
+            if (!action.payload) {
+                return state;
+            }
             return fuse<State>(state, {
                 dailyCalories: action.payload,
             });
@@ -26,3 +29,4 @@ export function calorimeterReducer(
     }
 }
 
+export const getDailyCalories = (state: State) => state.dailyCalories;
