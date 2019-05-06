@@ -1,9 +1,10 @@
 // ToDo: разобраться с неймингом. никаких item  и т.д. ['06.05.2019']
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { safe } from '../../../../shared/utils';
 import { SingleRecipeItem } from '../../../../recipes-page/commons/interfaces/single-recipe-item.interface';
 import { RecipesSegments } from '../../../../recipes-page/commons/enums/recipes-segments.enum';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
     selector: 'app-calorimeter-single-item',
@@ -17,10 +18,12 @@ export class CalorimeterSingleItemComponent implements OnInit {
         }
     }
 
+    @Output() deleteItem: EventEmitter<string> = new EventEmitter();
+
     id: string;
     item: { name: string, calories: number }; // ToDo: типизировать
 
-    constructor() { }
+    constructor(private _afs: AngularFirestore) { }
 
     static getCalories(quantity: number, recipe: SingleRecipeItem) {
         if (!recipe) {
@@ -35,6 +38,10 @@ export class CalorimeterSingleItemComponent implements OnInit {
     }
 
     ngOnInit() {}
+
+    delete() {
+        this.deleteItem.emit(this.id);
+    }
 
     private _prepareItem(currentItem) {
         this.id = currentItem.id;

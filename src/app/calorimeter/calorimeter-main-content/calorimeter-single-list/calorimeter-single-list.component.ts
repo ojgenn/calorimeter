@@ -1,18 +1,19 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { AngularFirestore } from '@angular/fire/firestore';
 
-import { User } from 'firebase';
+import { ModalController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
+import { User } from 'firebase';
+
+import * as FromRoot from '../../../reducer';
 
 import { CalorimeterPurpose } from '../../commons/enums/calorimeter-purpose.enum';
 import { calorimeterPurposeLabels } from '../../commons/models/calorimeter-purpose-labels.model';
 import { CalorimeterModalComponent } from '../../calorimeter-modal/calorimeter-modal.component';
 import { SingleRecipeItem } from '../../../recipes-page/commons/interfaces/single-recipe-item.interface';
-import { objectCopy, safeDetectChanges } from '../../../shared/utils';
+import { objectCopy } from '../../../shared/utils';
 import { ObservableHandler } from '../../../shared/models/observable-handler';
-import * as FromRoot from '../../../reducer';
 import { RecipesSegments } from '../../../recipes-page/commons/enums/recipes-segments.enum';
-import * as FromCalories from 'src/app/calorimeter/reducer/actions';
 import { CalorimeterService } from '../../services/calorimeter.service';
 
 @Component({
@@ -43,6 +44,7 @@ export class CalorimeterSingleListComponent implements OnInit {
 
     constructor(public _modalController: ModalController,
                 private _cdr: ChangeDetectorRef,
+                private _afs: AngularFirestore,
                 private _calorimeterService: CalorimeterService,
                 private _store: Store<any>) {}
 
@@ -99,7 +101,15 @@ export class CalorimeterSingleListComponent implements OnInit {
         this._calorimeterService.setSum(this.purpose, this.sum);
     }
 
-    trackByFn(index, item) {
+    trackByFn(index, item): string {
         return item.id;
+    }
+
+    deleteItem(id: string): void {
+        this._afs.collection(this.uid)
+            .doc('calorimeter')
+            .collection(this.date.slice(0, 10))
+            .doc(id)
+            .delete().catch();
     }
 }

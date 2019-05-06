@@ -9,5 +9,6 @@
         <ion-badge color="primary" slot="end">{{sum}}</ion-badge>
     </ion-item>
     <app-calorimeter-single-item *ngFor="let item of dailyCalories$$.latestValue; trackBy: trackByFn"
-                                 [singleItem]="{item: item[purpose], id: item?.id, recipes:recipes}"></app-calorimeter-single-item>
+                                 [singleItem]="{item: item[purpose], id: item?.id, recipes:recipes}"
+                                 (deleteItem)="deleteItem($event)"></app-calorimeter-single-item>
 </p>

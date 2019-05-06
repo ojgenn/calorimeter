@@ -6,7 +6,7 @@
     <ion-badge color="medium" slot="end">{{item.calories}}</ion-badge>
   </ion-item>
   <ion-item-options>
-    <ion-item-option color="danger">
+    <ion-item-option color="danger" (click)="delete()">
       <ion-icon slot="start" name="trash"></ion-icon>
       {{'PAGES.RECIPES.DELETE' | translate}}
     </ion-item-option>
