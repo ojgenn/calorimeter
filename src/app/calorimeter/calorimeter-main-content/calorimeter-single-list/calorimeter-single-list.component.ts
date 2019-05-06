@@ -8,9 +8,12 @@ import { CalorimeterPurpose } from '../../commons/enums/calorimeter-purpose.enum
 import { calorimeterPurposeLabels } from '../../commons/models/calorimeter-purpose-labels.model';
 import { CalorimeterModalComponent } from '../../calorimeter-modal/calorimeter-modal.component';
 import { SingleRecipeItem } from '../../../recipes-page/commons/interfaces/single-recipe-item.interface';
-import { safeDetectChanges } from '../../../shared/utils';
+import { objectCopy, safeDetectChanges } from '../../../shared/utils';
 import { ObservableHandler } from '../../../shared/models/observable-handler';
 import * as FromRoot from '../../../reducer';
+import { RecipesSegments } from '../../../recipes-page/commons/enums/recipes-segments.enum';
+import * as FromCalories from 'src/app/calorimeter/reducer/actions';
+import { CalorimeterService } from '../../services/calorimeter.service';
 
 @Component({
     selector: 'app-calorimeter-single-list',
@@ -22,11 +25,10 @@ export class CalorimeterSingleListComponent implements OnInit {
     @Input() set mode(mode: CalorimeterPurpose) {
         this.purpose = mode;
         this.dailyCalories$$ = new ObservableHandler(
-            this._store.select(FromRoot.dailyCalories, {purpose: mode}),
-            null,
+            this._store.select(FromRoot.dailyCalories, { purpose: mode }),
+            this._prepareDailyCalories.bind(this),
             this._cdr,
         );
-        safeDetectChanges(this._cdr);
     }
 
     @Input() recipes: Array<SingleRecipeItem>;
@@ -36,10 +38,12 @@ export class CalorimeterSingleListComponent implements OnInit {
     listLabel = calorimeterPurposeLabels.map;
     purpose: CalorimeterPurpose;
 
-    dailyCalories$$;
+    dailyCalories$$; // todo: типизировать
+    sum: number;
 
     constructor(public _modalController: ModalController,
                 private _cdr: ChangeDetectorRef,
+                private _calorimeterService: CalorimeterService,
                 private _store: Store<any>) {}
 
     ngOnInit() {}
@@ -66,4 +70,36 @@ export class CalorimeterSingleListComponent implements OnInit {
         return await modal.present();
     }
 
+    // Todo: типизировать
+    private _prepareDailyCalories(dailyCalories): void {
+        if (!dailyCalories) {
+            return;
+        }
+        this.sum = dailyCalories.reduce((sum, dailyCalorie) => {
+            dailyCalorie = objectCopy(dailyCalorie[this.purpose]);
+            const recipe = dailyCalorie.recipe;
+            if (!recipe) {
+                return sum + dailyCalorie.quantity;
+            }
+
+            if (this.recipes) {
+                const recipeFromRecipes = this.recipes.find(item => item.id === recipe.id);
+                if (recipeFromRecipes) {
+                    dailyCalorie.recipe = recipeFromRecipes;
+                }
+            }
+
+            switch (dailyCalorie.recipe.type) {
+                case RecipesSegments.Sport:
+                    return Math.round(sum + Number(dailyCalorie.quantity) * Number(dailyCalorie.recipe.calories));
+                case RecipesSegments.Products:
+                    return Math.round(sum + Number(dailyCalorie.quantity) * Number(dailyCalorie.recipe.calories) / 100);
+            }
+        }, 0);
+        this._calorimeterService.setSum(this.purpose, this.sum);
+    }
+
+    trackByFn(index, item) {
+        return item.id;
+    }
 }

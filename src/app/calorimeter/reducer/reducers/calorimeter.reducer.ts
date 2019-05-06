@@ -1,6 +1,5 @@
 import { ActionTypes, CalorimeterActions } from '../actions';
 import { fuse } from '../../../shared/utils';
-import { CalorimeterPurpose } from '../../commons/enums/calorimeter-purpose.enum';
 
 export interface State {
     dailyCalories: Array<any>; // ToDo: типизировать ['06/05/19']

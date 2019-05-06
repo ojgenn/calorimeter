@@ -19,7 +19,6 @@ export enum ActionTypes {
     GetDailyCaloriesSuccess = '[Calorimeter] Get Daily Calories Success',
 }
 
-
 export type CalorimeterActions =
     | GetDailyCalories
     | GetDailyCaloriesSuccess;

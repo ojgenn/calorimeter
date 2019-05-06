@@ -6,8 +6,8 @@
                 <ion-icon name="add-circle"></ion-icon>
             </ion-button>
         </ion-buttons>
-        <ion-badge color="primary" slot="end">88</ion-badge>
+        <ion-badge color="primary" slot="end">{{sum}}</ion-badge>
     </ion-item>
-    <app-calorimeter-single-item *ngFor="let item of dailyCalories$$.latestValue"
+    <app-calorimeter-single-item *ngFor="let item of dailyCalories$$.latestValue; trackBy: trackByFn"
                                  [singleItem]="{item: item[purpose], id: item?.id, recipes:recipes}"></app-calorimeter-single-item>
 </p>

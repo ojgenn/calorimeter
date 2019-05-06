@@ -1,7 +1,8 @@
 import { User } from 'firebase';
+
 import { PendingStatuses } from '../../../shared/enums/pending-statuses.enum';
 import { fuse } from '../../../shared/utils';
-import { ActionTypes, ProfileActions } from '../actions/types';
+import { ActionTypes, ProfileActions } from '../actions';
 import { UserData } from '../../profile.component';
 
 export interface State {
@@ -62,3 +63,4 @@ export function profileReducer(
 export const selectIsLoggedIn = (state: State) => state.isLoggedIn;
 export const authPending = (state: State) => state.authPending;
 export const user = (state: State) => state.user;
+export const consumption = (state: State) => state.userData.consumption;

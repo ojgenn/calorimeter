@@ -2,28 +2,28 @@
     <ion-card-content>
         <ion-row padding>
             <ion-col>
-                <ion-row>1743</ion-row>
+                <ion-row>{{consumption}}</ion-row>
                 <ion-row>{{'PAGES.CALORIMETER.HEADER.PURPOSE' | translate}}</ion-row>
             </ion-col>
             <ion-col>
                 -
             </ion-col>
             <ion-col>
-                <ion-row>0</ion-row>
+                <ion-row>{{foodSum}}</ion-row>
                 <ion-row>{{'PAGES.CALORIMETER.HEADER.FOOD' | translate}}</ion-row>
             </ion-col>
             <ion-col>
                 +
             </ion-col>
             <ion-col>
-                <ion-row>0</ion-row>
+                <ion-row>{{activitySum}}</ion-row>
                 <ion-row>{{'PAGES.CALORIMETER.HEADER.SPORT' | translate}}</ion-row>
             </ion-col>
             <ion-col>
                 =
             </ion-col>
             <ion-col>
-                <ion-row>1743</ion-row>
+                <ion-row>{{consumption - foodSum + activitySum}}</ion-row>
                 <ion-row>{{'PAGES.CALORIMETER.HEADER.SUMMARY' | translate}}</ion-row>
             </ion-col>
         </ion-row>

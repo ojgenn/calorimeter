@@ -6,6 +6,9 @@ import { Observable } from 'rxjs';
 
 import { User } from 'firebase';
 import { map } from 'rxjs/operators';
+import { SubjectHandler } from '../../shared/models/subject-handler';
+import { CalorimeterPurpose } from '../commons/enums/calorimeter-purpose.enum';
+import { objectCopy } from '../../shared/utils';
 
 @Injectable({
     providedIn: 'root',
@@ -13,6 +16,13 @@ import { map } from 'rxjs/operators';
 export class CalorimeterService {
 
     static readonly instance: CalorimeterService;
+
+    calorimeterSum = new SubjectHandler({
+        [CalorimeterPurpose.Breakfast]: 0,
+        [CalorimeterPurpose.Lunch]: 0,
+        [CalorimeterPurpose.Dinner]: 0,
+        [CalorimeterPurpose.Activity]: 0,
+    });
 
     constructor(private _store: Store<any>,
                 private _afs: AngularFirestore) {
@@ -32,6 +42,12 @@ export class CalorimeterService {
                     }),
                 ),
             );
+    }
+
+    setSum(purpose: CalorimeterPurpose, sum: number) {
+        const calorimeterSum = objectCopy(this.calorimeterSum.value);
+        calorimeterSum[purpose] = sum;
+        this.calorimeterSum.emit(calorimeterSum);
     }
 
 }
