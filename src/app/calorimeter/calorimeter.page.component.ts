@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
 
 import { Store } from '@ngrx/store';
 import { combineLatest } from 'rxjs';
@@ -45,7 +44,6 @@ export class CalorimeterPageComponent implements OnInit {
     userData: CalorimeterUserData;
 
     constructor(private _store: Store<any>,
-                private _afs: AngularFirestore,
                 private _cdr: ChangeDetectorRef) {}
 
     ngOnInit(): void {
@@ -59,16 +57,6 @@ export class CalorimeterPageComponent implements OnInit {
     private _prepareStateData(userData: CalorimeterUserData): void {
         this.userData = objectCopy(userData);
         if (this.date) {
-            // const collection = this._afs.collection(userData.uid).doc('calorimeter').collection(this.date.slice(0, 10))
-            //     .snapshotChanges()
-            //     .pipe(
-            //         map(values => values.map(value => {
-            //                 const data = value.payload.doc.data();
-            //                 const id = value.payload.doc.id;
-            //                 return { [id]: {...data} };
-            //             }),
-            //         ),
-            //     ).subscribe(res => console.log(res));
             this._store.dispatch(new CalorimeterActions.GetDailyCalories({uid: userData.uid, date: this.date}));
         }
         safeDetectChanges(this._cdr);
