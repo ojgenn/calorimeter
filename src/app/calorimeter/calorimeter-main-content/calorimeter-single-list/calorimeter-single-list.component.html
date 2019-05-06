@@ -2,13 +2,17 @@
     <ion-item>
         <ion-label>{{listLabel[purpose].name | translate}}</ion-label>
         <ion-buttons slot="start">
-            <ion-button color="medium" (click)="presentModal()">
+            <ion-button color="medium"
+                        (click)="presentModal()"
+                        [disabled]="!enableEditItems">
                 <ion-icon name="add-circle"></ion-icon>
             </ion-button>
         </ion-buttons>
         <ion-badge color="primary" slot="end">{{sum}}</ion-badge>
     </ion-item>
     <app-calorimeter-single-item *ngFor="let item of dailyCalories$$.latestValue; trackBy: trackByFn"
-                                 [singleItem]="{item: item[purpose], id: item?.id, recipes:recipes}"
+                                 [singleItem]="{item: item[purpose],
+                                             id: item?.id, recipes:recipes,
+                                             enableEditItems: enableEditItems}"
                                  (deleteItem)="deleteItem($event)"></app-calorimeter-single-item>
 </p>

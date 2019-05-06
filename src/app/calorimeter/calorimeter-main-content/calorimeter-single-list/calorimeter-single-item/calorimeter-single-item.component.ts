@@ -15,6 +15,7 @@ export class CalorimeterSingleItemComponent implements OnInit {
     @Input() set singleItem(item) {
         if (item) {
             this.item = this._prepareItem(item);
+            this.enableEditItems = item.enableEditItems;
         }
     }
 
@@ -22,6 +23,7 @@ export class CalorimeterSingleItemComponent implements OnInit {
 
     id: string;
     item: { name: string, calories: number }; // ToDo: типизировать
+    enableEditItems = false;
 
     constructor(private _afs: AngularFirestore) { }
 

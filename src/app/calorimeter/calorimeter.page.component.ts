@@ -47,7 +47,8 @@ export class CalorimeterPageComponent implements OnInit {
                 private _cdr: ChangeDetectorRef) {}
 
     ngOnInit(): void {
-        this.date = new Date().toISOString();
+        const timeZoneOffset = (new Date()).getTimezoneOffset() * 60000;
+        this.date = (new Date(Date.now() - timeZoneOffset)).toISOString().slice(0, -1);
     }
 
     dateChanged(e) {
