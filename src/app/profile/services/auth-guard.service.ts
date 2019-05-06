@@ -4,7 +4,7 @@ import { CanActivate, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 
-import * as ProfileActions from '../reducer/actions/profile.actions';
+import * as ProfileActions from '../reducer/actions';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { catchError, map } from 'rxjs/operators';
 import { User } from 'firebase';

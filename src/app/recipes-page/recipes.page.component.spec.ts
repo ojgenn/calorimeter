@@ -11,7 +11,7 @@ describe('RecipesPageComponent', () => {
     TestBed.configureTestingModule({
       declarations: [RecipesPageComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    }).compileComponents();
+    }).compileComponents().catch();
   }));
 
   beforeEach(() => {

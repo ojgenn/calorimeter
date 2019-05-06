@@ -22,6 +22,15 @@
 
 <ion-content padding>
 
+    <ion-refresher (ionRefresh)="doRefresh()" #refresherRef>
+        <ion-refresher-content
+                pullingIcon="arrow-dropdown"
+                [pullingText]="'REFRESHER.PULL_DOWN' | translate"
+                refreshingSpinner="circles"
+                [refreshingText]="'REFRESHER.REFRESHING' | translate">
+        </ion-refresher-content>
+    </ion-refresher>
+
   <div *ngIf="showSpinner; else mainContent" class="spinner-container">
     <ion-spinner name="lines"></ion-spinner>
   </div>

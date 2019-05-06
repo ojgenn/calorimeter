@@ -1,9 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 
 import { Store } from '@ngrx/store';
-import { map } from 'rxjs/operators';
+import { map, pluck } from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { User } from 'firebase';
 
 import { RecipesModalComponent } from './recipes-modal/recipes-modal.component';
@@ -13,8 +16,6 @@ import { user } from '../reducer';
 import { AutoUnsubscribe } from '../shared/decorators';
 import { SingleRecipeItem } from './commons/interfaces/single-recipe-item.interface';
 import { RecipeModalMode } from './commons/enums/recipe-modal-mode.enum';
-import { FormControl } from '@angular/forms';
-import { Subscription } from 'rxjs';
 
 @AutoUnsubscribe
 @Component({
@@ -25,6 +26,8 @@ import { Subscription } from 'rxjs';
 })
 
 export class RecipesPageComponent implements OnInit, OnDestroy {
+
+    @ViewChild('refresherRef') private _refresherRef;
     recipesSegments = {
         [RecipesSegments.Products]: 'PAGES.RECIPES.SEGMENTS.PRODUCTS',
         [RecipesSegments.Sport]: 'PAGES.RECIPES.SEGMENTS.SPORT',
@@ -32,7 +35,6 @@ export class RecipesPageComponent implements OnInit, OnDestroy {
     segments = RecipesSegments;
     activeSegment: RecipesSegments = RecipesSegments.Products;
 
-    // удалить, когда начнем качать реальные данные с сервера
     items: Array<SingleRecipeItem> = [];
     filteredItems:  Array<SingleRecipeItem> = [];
     showSpinner = false;
@@ -42,7 +44,10 @@ export class RecipesPageComponent implements OnInit, OnDestroy {
     private _items$$;
 
     private _user$$ = new ObservableHandler(
-        this._store.select(user),
+        this._store.select(user)
+            .pipe(
+                pluck('uid')
+            ),
         this._initCollection.bind(this),
         this._cdr,
     );
@@ -53,12 +58,17 @@ export class RecipesPageComponent implements OnInit, OnDestroy {
     constructor(public _modalController: ModalController,
                 private _store: Store<any>,
                 private _cdr: ChangeDetectorRef,
+                private _router: Router,
                 private _afs: AngularFirestore) {}
 
     ngOnInit(): void {
         this._searchControlFormSubscription$ = this.searchBarForm.valueChanges.subscribe(res => {
             this.filteredItems = this.items.filter(item => item.name.includes(res));
         });
+    }
+
+    doRefresh() {
+        this._initCollection(this._user$$.latestValue);
     }
 
     segmentChanged(ev: any): void {
@@ -84,7 +94,7 @@ export class RecipesPageComponent implements OnInit, OnDestroy {
             componentProps: {
                 data: {
                     activeSegment: this.activeSegment,
-                    uid: this._user$$.latestValue.uid,
+                    uid: this._user$$.latestValue,
                     recipeModalMode,
                     recipe,
                 }
@@ -100,10 +110,13 @@ export class RecipesPageComponent implements OnInit, OnDestroy {
         return await modal.present();
     }
 
-    private _initCollection(userFromStore: User): void {
-        if (!!userFromStore) {
+    private _initCollection(uid: User['uid']): void {
+        if (!!uid) {
             this.showSpinner = true;
-            this._itemsCollection = this._afs.collection(userFromStore.uid).doc('my_products').collection(this.activeSegment);
+            this._itemsCollection = this._afs
+                .collection(uid)
+                .doc('my_products')
+                .collection(this.activeSegment, ref => ref.orderBy('name'));
             this._items$$ = new ObservableHandler(this._itemsCollection.snapshotChanges()
                 .pipe(
                     map(item => item.map(recipe => {
@@ -118,9 +131,12 @@ export class RecipesPageComponent implements OnInit, OnDestroy {
         }
     }
 
-    private _prepareItems(item): void {
-        this.items = item;
-        this.filteredItems = item;
+    private _prepareItems(itemList: Array<SingleRecipeItem>): void {
+        this.items = itemList;
+        this.filteredItems = itemList.filter(item => item.name.includes(this.searchBarForm.value));
+        if (this._refresherRef) {
+            this._refresherRef.complete();
+        }
         this.showSpinner = false;
     }
 

@@ -39,6 +39,7 @@ export class ProfileComponent {
     userDataFormGroup: FormGroup = ProfileComponent.initFormGroup();
     formGender = gender.asArray;
     formLoad = load.asArray;
+    showSpinner = false;
 
     private _getUser$$ = new ObservableHandler(
         this._authService.getUser(),
@@ -98,7 +99,8 @@ export class ProfileComponent {
         this._authService.signOut();
     }
 
-    save() {
+    save(): void {
+        this.showSpinner = true;
         const userData: UserData = {
             age: parseInt(this.userDataFormGroup.controls['age'].value, 10),
             gender: this.userDataFormGroup.controls['gender'].value,
@@ -107,7 +109,13 @@ export class ProfileComponent {
             load: this.userDataFormGroup.controls['load'].value,
         };
         this._prepareAndStoreUserData(userData);
-        this._storage.set('userData', userData).catch();
+        this._storage.set('userData', userData)
+            .finally(() => {
+                setTimeout(() => {
+                    this.showSpinner = false;
+                    safeDetectChanges(this._cdr);
+                }, 500);
+            });
     }
 
     private _prepareUser(user: User): void {

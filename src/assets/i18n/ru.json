@@ -2,7 +2,8 @@
   "TABS": {
     "PROFILE": "Мои данные",
     "SIGN_IN": "Авторизация",
-    "RECIPES": "Мои рецепты"
+    "RECIPES": "Мои рецепты",
+    "CALORIMETER": "Учет калорий"
   },
   "PAGES": {
     "SIGN_IN": {
@@ -61,11 +62,38 @@
         "OK_BUTTON": "Ок",
         "CANCEL_BUTTON": "Отмена"
       }
+    },
+    "CALORIMETER": {
+      "HEADER": {
+        "PURPOSE": "Цель",
+        "FOOD": "Прием пищи",
+        "SPORT": "Спорт",
+        "SUMMARY": "Итого"
+      },
+      "PURPOSE_LABELS": {
+        "BREAKFAST": "Завтрак",
+        "LUNCH": "Обед",
+        "DINNER": "Ужин",
+        "ACTIVITY": "Активность"
+      },
+      "GET_DATE": "Выберите дату",
+      "CALORIES_MODAL": {
+        "SEARCH_BY_NAME_CHECK_BOX": "Вести поиск по имени",
+        "CALORIE": "Калорийность, ккал",
+        "QUANTITY": "Количество, гр.",
+        "DURATION": "Продолжительность, час."
+      }
     }
   },
   "BUTTONS": {
     "OK_BUTTON": "Ок",
     "CANCEL_BUTTON": "Отмена",
-    "SAVE": "Сохранить"
+    "SAVE": "Сохранить",
+    "SAVING": "Сохранение",
+    "BACK": "Назад"
+  },
+  "REFRESHER": {
+    "PULL_DOWN": "Потяните вниз",
+    "REFRESHING": "Обновление данных..."
   }
 }

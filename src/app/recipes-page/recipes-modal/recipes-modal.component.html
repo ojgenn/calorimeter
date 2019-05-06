@@ -15,7 +15,7 @@
 
 <ion-content padding color="medium">
     <ion-item color="medium">
-    {{(recipeSegment === recipesSegments.Products ? 'PAGES.RECIPES.SEGMENTS.PRODUCTS' : 'PAGES.RECIPES.SEGMENTS.SPORT') | translate}}
+        {{(recipeSegment === recipesSegments.Products ? 'PAGES.RECIPES.SEGMENTS.PRODUCTS' : 'PAGES.RECIPES.SEGMENTS.SPORT') | translate}}
     </ion-item>
 
     <form [formGroup]="recipeModalForm">
@@ -41,13 +41,6 @@
             <ion-col *ngIf="recipeModalMode !== recipeModals.Show">
                 <ion-button [disabled]="recipeModalForm.invalid" (click)="save()">
                     {{'BUTTONS.SAVE' | translate}}
-                </ion-button>
-            </ion-col>
-            <ion-col>
-                <ion-button
-                        color="danger"
-                        (click)="close()">
-                    {{'PAGES.PROFILE.SIGN_OUT_BUTTON_LABEL' | translate}}
                 </ion-button>
             </ion-col>
         </ion-row>
