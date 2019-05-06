@@ -1,8 +1,10 @@
 import { ActionTypes, CalorimeterActions } from '../actions';
 import { fuse } from '../../../shared/utils';
+import { Dictionary } from '../../../shared/interfaces/dictionary.interface';
+import { DailyCalorie } from '../../commons/interfaces/daily-calorie.interface';
 
 export interface State {
-    dailyCalories: Array<any>; // ToDo: типизировать ['06/05/19']
+    dailyCalories: Array<Dictionary<DailyCalorie>>;
 }
 
 export const initialState: State = {

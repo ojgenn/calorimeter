@@ -77,6 +77,7 @@
         "ACTIVITY": "Активность"
       },
       "GET_DATE": "Выберите дату",
+      "UNNAMED": "Без названия",
       "CALORIES_MODAL": {
         "SEARCH_BY_NAME_CHECK_BOX": "Вести поиск по имени",
         "CALORIE": "Калорийность, ккал",

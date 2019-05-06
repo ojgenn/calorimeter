@@ -9,6 +9,8 @@ import { map } from 'rxjs/operators';
 import { SubjectHandler } from '../../shared/models/subject-handler';
 import { CalorimeterPurpose } from '../commons/enums/calorimeter-purpose.enum';
 import { objectCopy } from '../../shared/utils';
+import { Dictionary } from '../../shared/interfaces/dictionary.interface';
+import { DailyCalorie } from '../commons/interfaces/daily-calorie.interface';
 
 @Injectable({
     providedIn: 'root',
@@ -31,13 +33,14 @@ export class CalorimeterService {
         CalorimeterService.instance = this;
     }
 
-    getDailyCalories(uid: User['uid'], date: string): Observable<any> {
+    getDailyCalories(uid: User['uid'], date: string): Observable<Array<Dictionary<DailyCalorie>>> {
         return this._afs.collection(uid).doc('calorimeter').collection(date.slice(0, 10))
             .snapshotChanges()
             .pipe(
                 map(values => values.map(value => {
-                        const data = value.payload.doc.data();
-                        data.id = value.payload.doc.id;
+                        const data = objectCopy(value.payload.doc.data());
+                        const purpose = Object.keys(data)[0];
+                        data[purpose] = {...data[purpose], id: value.payload.doc.id};
                         return { ...data };
                     }),
                 ),
