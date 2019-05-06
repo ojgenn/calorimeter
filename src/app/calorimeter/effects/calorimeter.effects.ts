@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { EMPTY, of } from 'rxjs';
+import { EMPTY, Observable, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
 import * as Calorimeter from '../reducer/actions';
 
 import { CalorimeterService } from '../services/calorimeter.service';
+import { Dictionary } from '../../shared/interfaces/dictionary.interface';
+import { DailyCalorie } from '../commons/interfaces/daily-calorie.interface';
 
 @Injectable()
 export class CalorimeterEffects {
@@ -23,9 +25,7 @@ export class CalorimeterEffects {
             switchMap((action: Calorimeter.GetDailyCalories) => this._calorimeterService
                 .getDailyCalories(action.payload.uid, action.payload.date)
                 .pipe(
-                    map((dailyCalories) => { // ToDo: типизировать ['06/05/19']
-                        return new Calorimeter.GetDailyCaloriesSuccess(dailyCalories);
-                    }),
+                    map((dailyCalories: Array<Dictionary<DailyCalorie>>) => new Calorimeter.GetDailyCaloriesSuccess(dailyCalories)),
                     catchError(() => EMPTY),
                 )),
         );

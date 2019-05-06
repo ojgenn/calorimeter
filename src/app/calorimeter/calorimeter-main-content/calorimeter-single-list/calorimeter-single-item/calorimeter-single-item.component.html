@@ -1,11 +1,11 @@
 <ion-item-sliding #slidingItem>
   <ion-item>
     <ion-label>
-      {{item.name}}
+      {{item.name ? item.name : 'PAGES.CALORIMETER.UNNAMED' | translate}}
     </ion-label>
     <ion-badge color="medium" slot="end">{{item.calories}}</ion-badge>
   </ion-item>
-  <ion-item-options>
+  <ion-item-options *ngIf="enableEditItems">
     <ion-item-option color="danger" (click)="delete()">
       <ion-icon slot="start" name="trash"></ion-icon>
       {{'PAGES.RECIPES.DELETE' | translate}}

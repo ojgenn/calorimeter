@@ -11,10 +11,12 @@ import { CalorimeterPurpose } from '../../commons/enums/calorimeter-purpose.enum
 import { calorimeterPurposeLabels } from '../../commons/models/calorimeter-purpose-labels.model';
 import { CalorimeterModalComponent } from '../../calorimeter-modal/calorimeter-modal.component';
 import { SingleRecipeItem } from '../../../recipes-page/commons/interfaces/single-recipe-item.interface';
-import { objectCopy } from '../../../shared/utils';
+import { objectCopy, safeDetectChanges } from '../../../shared/utils';
 import { ObservableHandler } from '../../../shared/models/observable-handler';
-import { RecipesSegments } from '../../../recipes-page/commons/enums/recipes-segments.enum';
 import { CalorimeterService } from '../../services/calorimeter.service';
+import { CalorimeterSingleItemComponent } from './calorimeter-single-item/calorimeter-single-item.component';
+import { Dictionary } from '../../../shared/interfaces/dictionary.interface';
+import { DailyCalorie } from '../../commons/interfaces/daily-calorie.interface';
 
 @Component({
     selector: 'app-calorimeter-single-list',
@@ -33,13 +35,22 @@ export class CalorimeterSingleListComponent implements OnInit {
     }
 
     @Input() recipes: Array<SingleRecipeItem>;
-    @Input() date: string;
+
+    @Input() set date(date: string) {
+        this.currentDate = date;
+        const timeZoneOffset = (new Date()).getTimezoneOffset() * 60000;
+        const todayDate = (new Date(Date.now() - timeZoneOffset)).toISOString().slice(0, -1);
+        this.enableEditItems = todayDate.slice(0, 10) === date.slice(0, 10);
+        safeDetectChanges(this._cdr);
+    }
+
     @Input() uid: User['uid'];
 
     listLabel = calorimeterPurposeLabels.map;
     purpose: CalorimeterPurpose;
-
-    dailyCalories$$; // todo: типизировать
+    enableEditItems: boolean;
+    currentDate: string;
+    dailyCalories$$: ObservableHandler<Array<Dictionary<DailyCalorie>>>;
     sum: number;
 
     constructor(public _modalController: ModalController,
@@ -48,7 +59,8 @@ export class CalorimeterSingleListComponent implements OnInit {
                 private _calorimeterService: CalorimeterService,
                 private _store: Store<any>) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+    }
 
     async presentModal(): Promise<void> {
         const modal: HTMLIonModalElement = await this._modalController.create({
@@ -57,46 +69,34 @@ export class CalorimeterSingleListComponent implements OnInit {
                 data: {
                     mode: this.purpose,
                     recipes: this.recipes,
-                    date: this.date,
+                    date: this.currentDate,
                     uid: this.uid,
                 },
             },
         });
-        modal.onDidDismiss()
-            .then((result) => {
-                if (result.data) {
-                    console.log(result.data);
-                }
-            });
 
         return await modal.present();
     }
 
-    // Todo: типизировать
-    private _prepareDailyCalories(dailyCalories): void {
+    private _prepareDailyCalories(dailyCalories: Array<Dictionary<DailyCalorie>>): void {
         if (!dailyCalories) {
             return;
         }
         this.sum = dailyCalories.reduce((sum, dailyCalorie) => {
-            dailyCalorie = objectCopy(dailyCalorie[this.purpose]);
-            const recipe = dailyCalorie.recipe;
+            const dailyCalorieFromPurpose = objectCopy(dailyCalorie[this.purpose]);
+            const recipe = dailyCalorieFromPurpose.recipe;
             if (!recipe) {
-                return sum + Number(dailyCalorie.quantity);
+                return sum + Number(dailyCalorieFromPurpose.quantity);
             }
 
             if (this.recipes) {
                 const recipeFromRecipes = this.recipes.find(item => item.id === recipe.id);
                 if (recipeFromRecipes) {
-                    dailyCalorie.recipe = recipeFromRecipes;
+                    dailyCalorieFromPurpose.recipe = recipeFromRecipes;
                 }
             }
-
-            switch (dailyCalorie.recipe.type) {
-                case RecipesSegments.Sport:
-                    return Math.round(sum + Number(dailyCalorie.quantity) * Number(dailyCalorie.recipe.calories));
-                case RecipesSegments.Products:
-                    return Math.round(sum + Number(dailyCalorie.quantity) * Number(dailyCalorie.recipe.calories) / 100);
-            }
+            const calories = CalorimeterSingleItemComponent.getCalories(dailyCalorieFromPurpose.quantity, dailyCalorieFromPurpose.recipe);
+            return Math.round(sum + calories);
         }, 0);
         this._calorimeterService.setSum(this.purpose, this.sum);
     }
@@ -108,7 +108,7 @@ export class CalorimeterSingleListComponent implements OnInit {
     deleteItem(id: string): void {
         this._afs.collection(this.uid)
             .doc('calorimeter')
-            .collection(this.date.slice(0, 10))
+            .collection(this.currentDate.slice(0, 10))
             .doc(id)
             .delete().catch();
     }
