@@ -25,6 +25,11 @@ export const user = createSelector(
     (state: fromProfile.State) => state.user,
 );
 
+export const consumption = createSelector(
+    getProfileState,
+    (state: fromProfile.State) => state.userData.consumption,
+);
+
 export const products = createSelector(
     getRecipesState,
     (state: fromRecipes.State) => state.products,
