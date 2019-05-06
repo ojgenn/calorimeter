@@ -51,7 +51,9 @@ export class CalorimeterPageComponent implements OnInit {
     }
 
     dateChanged(e) {
-        console.log(e);
+        this.date = e.detail.value;
+        this._store.dispatch(new CalorimeterActions.GetDailyCalories({uid: this.userData.uid, date: this.date}));
+        safeDetectChanges(this._cdr);
     }
 
     private _prepareStateData(userData: CalorimeterUserData): void {

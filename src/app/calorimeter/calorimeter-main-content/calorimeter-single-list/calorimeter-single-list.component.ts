@@ -81,7 +81,7 @@ export class CalorimeterSingleListComponent implements OnInit {
             dailyCalorie = objectCopy(dailyCalorie[this.purpose]);
             const recipe = dailyCalorie.recipe;
             if (!recipe) {
-                return sum + dailyCalorie.quantity;
+                return sum + Number(dailyCalorie.quantity);
             }
 
             if (this.recipes) {
