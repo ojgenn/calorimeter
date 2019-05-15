@@ -7,7 +7,11 @@
   },
   "PAGES": {
     "SIGN_IN": {
-      "BUTTON_LABEL": "авторизация",
+      "AUTH": "авторизация",
+      "REG": "регистрация",
+      "EMAIL": "e-mail",
+      "PASSWORD": "Введите пароль",
+      "CONFIRM_PASSWORD": "Повторите пароль",
       "PENDING_LABEL": "проверка авторизации"
     },
     "PROFILE": {

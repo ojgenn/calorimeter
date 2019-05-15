@@ -1,13 +1,49 @@
 <div>
-    <ion-col *ngIf="(authPending$ | async) === pendingStatuses.Pending; else googleIcon"
+    <ion-col *ngIf="(authPending$ | async) === pendingStatuses.Pending; else singInOrUp"
          class="center">
         <ion-spinner name="lines-small"></ion-spinner>
         <span class="button-label">{{'PAGES.SIGN_IN.PENDING_LABEL' | translate}}</span>
     </ion-col>
 </div>
-<ng-template #googleIcon>
-    <ion-button (click)="signIn()" expand="block">
-        <ion-icon expand="block" name="logo-googleplus"></ion-icon>
-        <span class="button-label">{{'PAGES.SIGN_IN.BUTTON_LABEL' | translate}}</span>
-    </ion-button>
+<ng-template #singInOrUp>
+    <ion-item>
+        <ion-segment (ionChange)="segmentChanged($event)" color="medium">
+            <ion-segment-button [value]="authPurpose.Auth" checked>
+                <ion-label>{{'PAGES.SIGN_IN.AUTH' | translate}}</ion-label>
+            </ion-segment-button>
+            <ion-segment-button [value]="authPurpose.Register">
+                <ion-label>{{'PAGES.SIGN_IN.REG' | translate}}</ion-label>
+            </ion-segment-button>
+        </ion-segment>
+    </ion-item>
+    <form [formGroup]="authForm">
+        <ion-item>
+            <ion-label position="floating"
+                       color="{{ authForm.controls.email.errors && authForm.controls.email.errors.dirty ? 'danger' : 'medium' }}">
+                {{'PAGES.SIGN_IN.EMAIL' | translate}}
+            </ion-label>
+            <ion-input formControlName="email"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating"
+                       color="{{ authForm.controls.password.errors && authForm.controls.password.dirty ? 'danger' : 'medium' }}">
+                {{'PAGES.SIGN_IN.PASSWORD' | translate}}
+            </ion-label>
+            <ion-input type="password" formControlName="password"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="authForm.controls.confirmPassword">
+            <ion-label position="floating"
+                       color="{{ (authForm.controls.confirmPassword.errors && authForm.controls.confirmPassword.dirty) || (authForm.errors && authForm.dirty) ? 'danger' : 'medium' }}">
+                {{'PAGES.SIGN_IN.CONFIRM_PASSWORD' | translate}}
+            </ion-label>
+            <ion-input type="password" formControlName="confirmPassword"></ion-input>
+        </ion-item>
+        <ion-row>
+            <ion-col>
+                <ion-button [disabled]="authForm.invalid" (click)="signIn()">
+                    {{(signInChecker === authPurpose.Auth ? 'PAGES.SIGN_IN.AUTH' : 'PAGES.SIGN_IN.REG') | translate}}
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </form>
 </ng-template>
